@@ -47,6 +47,6 @@ func _process(delta):
 			$TemporarySprite.play()
 	
 	# Trigger echo on sprite frames where foot hits ground
-	if $TemporarySprite.frame == 3 or $TemporarySprite.frame == 7:
-		var echo_size = 0.7 if Input.is_action_pressed("sprint") else 0.4
+	if player_state != state.IDLE and ($TemporarySprite.frame == 3 or $TemporarySprite.frame == 7):
+		var echo_size = 0.5 if Input.is_action_pressed("sprint") else 0.36
 		emit_signal("noise_made", echo_size, position)
