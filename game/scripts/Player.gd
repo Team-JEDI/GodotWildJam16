@@ -4,7 +4,15 @@ class_name Player
 const PLAYER_SPEED := 100.0        # Movement speed in pixels per second
 const SPRINT_FACTOR := 3.5         # How much faster sprinting is than sneaking
 
-onready var player_light := $Light2D
+enum state {
+	WALKING,
+	SPRINTING,
+	IDLE
+}
+
+var player_state = state.IDLE
+
+signal noise_made
 
 func _process(delta):
 	
@@ -25,12 +33,20 @@ func _process(delta):
 		move_vec *= SPRINT_FACTOR
 	move_and_collide(move_vec * PLAYER_SPEED * delta)
 	
-	# Adjust visible area around player; large if moving, shrinking if still
-	# Eventually this can be tied to sprite frames where footsteps are occurring
-	if move_vec != Vector2(0,0):
-		if Input.is_action_pressed("sprint"):
-			player_light.texture_scale = 0.7
-		else:
-			player_light.texture_scale = 0.3
+	# Update player state if appropriate
+	if move_vec == Vector2(0, 0):
+		player_state = state.IDLE
+		$TemporarySprite.stop()
+	elif Input.is_action_pressed("sprint"):
+		player_state = state.SPRINTING
+		if not $TemporarySprite.is_playing():
+			$TemporarySprite.play()
 	else:
-		player_light.texture_scale = lerp(player_light.texture_scale, 0.01, 0.02)
+		player_state = state.WALKING
+		if not $TemporarySprite.is_playing():
+			$TemporarySprite.play()
+	
+	# Trigger echo on sprite frames where foot hits ground
+	if $TemporarySprite.frame == 3 or $TemporarySprite.frame == 7:
+		var echo_size = 0.7 if Input.is_action_pressed("sprint") else 0.4
+		emit_signal("noise_made", echo_size, position)
