@@ -3,7 +3,7 @@ extends Node
 # This script controls the time-remaining mechanic for the game
 
 const HOURS_IN_GAME : int = 5        # Number of hours left at beginning
-const SECS_IN_HOUR : int = 10       # 6 minutes IRL == 1 hour in-game
+const SECS_IN_HOUR : int = 360       # 6 minutes IRL == 1 hour in-game
 const BELL_ECHO_SIZE : int = 10000
 const BELL_ECHO_POS := Vector2(0, -1000)
 

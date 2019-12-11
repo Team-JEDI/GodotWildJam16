@@ -7,6 +7,7 @@ func _ready():
 	GameTimer.connect("noise_made", self, "_on_noise_made")
 	GameTimer.connect("hour_elapsed", self, "_on_hour_elapsed")
 	
+	yield(get_tree().create_timer(2.0), "timeout")
 	GameTimer.start_new_game()
 
 func _on_noise_made(echo_scale, location):
