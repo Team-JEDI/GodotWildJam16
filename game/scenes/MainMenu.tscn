@@ -1,0 +1,58 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/MainMenu.gd" type="Script" id=1]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleTexture" type="TextureRect" parent="."]
+anchor_right = 1.0
+margin_top = 120.0
+margin_right = 0.00012207
+margin_bottom = 340.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_top = 0.4
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 36
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewBtn" type="Button" parent="VBoxContainer"]
+margin_top = 230.0
+margin_right = 1920.0
+margin_bottom = 250.0
+text = "NEW GAME"
+
+[node name="LoadBtn" type="Button" parent="VBoxContainer"]
+margin_top = 286.0
+margin_right = 1920.0
+margin_bottom = 306.0
+text = "LOAD GAME"
+
+[node name="CredsBtn" type="Button" parent="VBoxContainer"]
+margin_top = 342.0
+margin_right = 1920.0
+margin_bottom = 362.0
+text = "CREDITS"
+
+[node name="QuitBtn" type="Button" parent="VBoxContainer"]
+margin_top = 398.0
+margin_right = 1920.0
+margin_bottom = 418.0
+text = "QUIT GAME"
+[connection signal="button_up" from="VBoxContainer/NewBtn" to="." method="_on_new_game"]
+[connection signal="button_up" from="VBoxContainer/LoadBtn" to="." method="_on_load_game"]
+[connection signal="button_up" from="VBoxContainer/CredsBtn" to="." method="_on_view_credits"]
+[connection signal="button_up" from="VBoxContainer/QuitBtn" to="." method="_on_quit_game"]
