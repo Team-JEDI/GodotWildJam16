@@ -1,8 +1,8 @@
 extends Node2D
 
-const SAVE_FILEPATH := "usr://save.json"
-
 onready var Echo = preload("res://scenes/Echo.tscn")
+
+export var level_num : int = 0
 
 func _ready():
 	$Character.connect("noise_made", self, "_on_noise_made")
@@ -11,8 +11,11 @@ func _ready():
 	for ckpt in $checkpoints.get_children():
 		ckpt.connect("game_saved", self, "_on_game_saved")
 	
-	yield(get_tree().create_timer(2.0), "timeout")
-	GameTimer.start_new_game()
+	if LoadHelper.is_loading:
+		restore_save_data()
+	else:
+		# Setup new game
+		pass
 
 func _on_noise_made(echo_scale, location):
 	var new_echo = Echo.instance()
@@ -27,19 +30,27 @@ func _on_hour_elapsed(hours_left):
 func _on_game_saved():
 	
 	# Save game info in a dictionary
-	var save_data : Dictionary = {}
-	save_data["player_loc"] = $Character.position
-	save_data["hours_left"] = GameTimer.hours_remaining
-	save_data["secs_left"] = GameTimer.global_timer.time_left
+	LoadHelper.save_data["level_number"] = level_num
+	LoadHelper.save_data["player_loc"] = $Character.position
+	LoadHelper.save_data["player_health"] = $Character.player_health
+	LoadHelper.save_data["hours_left"] = GameTimer.hours_remaining
+	LoadHelper.save_data["secs_left"] = GameTimer.global_timer.time_left
 	var enemy_locs : Array = []
 	for enemy in $enemies.get_children():
 		enemy_locs.append(enemy.position)
-	save_data["enemy_locs"] = enemy_locs
+	LoadHelper.save_data["enemy_locs"] = enemy_locs
 	
-	# Write dictionary to file
-	var save_file : File = File.new()
-	var err = save_file.open(SAVE_FILEPATH, File.WRITE)
-	if err != OK:
-		print("Could not save file!")
-	else:
-		save_file.store_string(JSON.print(save_data))
+	LoadHelper.write_save_data()
+
+func restore_save_data():
+	
+	$Character.position = LoadHelper.save_data["player_loc"]
+	$Character.player_health = LoadHelper.save_data["player_health"]
+	GameTimer.hours_remaining = LoadHelper.save_data["hours_left"]
+	GameTimer.global_timer.time_left = LoadHelper.save_data["secs_left"]
+	
+	var enemies = $enemies.get_children()
+	for index in range(len(LoadHelper.save_data["enemy_locs"])-1):
+		enemies[index].position = LoadHelper.save_data["enemy_locs"][index]
+	
+	GameTimer.global_timer.start()
