@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 25.8207, 23.7878 )
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=2]
 resource_name = "IdleDown"
 length = 0.1
 tracks/0/type = "value"
@@ -22,7 +22,7 @@ tracks/0/keys = {
 "values": [ 17 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=3]
 resource_name = "IdleLeft"
 length = 0.1
 tracks/0/type = "value"
@@ -50,7 +50,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=4]
 resource_name = "IdleRight"
 length = 0.1
 tracks/0/type = "value"
@@ -78,7 +78,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=5]
 resource_name = "IdleUp"
 length = 0.1
 tracks/0/type = "value"
@@ -94,8 +94,7 @@ tracks/0/keys = {
 "values": [ 26 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "WalkDown"
+[sub_resource type="Animation" id=6]
 length = 1.2
 loop = true
 step = 0.15
@@ -112,8 +111,7 @@ tracks/0/keys = {
 "values": [ 9, 10, 11, 12, 13, 14, 15, 10 ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "WalkLeft"
+[sub_resource type="Animation" id=7]
 length = 1.2
 loop = true
 step = 0.15
@@ -142,8 +140,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "WalkRight"
+[sub_resource type="Animation" id=8]
 length = 1.2
 loop = true
 step = 0.15
@@ -172,8 +169,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "WalkUp"
+[sub_resource type="Animation" id=9]
 length = 1.2
 loop = true
 step = 0.15
@@ -203,22 +199,20 @@ current = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "IdleDown"
-anims/IdleDown = SubResource( 9 )
-anims/IdleLeft = SubResource( 6 )
-anims/IdleRight = SubResource( 7 )
-anims/IdleUp = SubResource( 8 )
-anims/WalkDown = SubResource( 5 )
-anims/WalkLeft = SubResource( 3 )
-anims/WalkRight = SubResource( 2 )
-anims/WalkUp = SubResource( 4 )
+anims/IdleDown = SubResource( 2 )
+anims/IdleLeft = SubResource( 3 )
+anims/IdleRight = SubResource( 4 )
+anims/IdleUp = SubResource( 5 )
+anims/WalkDown = SubResource( 6 )
+anims/WalkLeft = SubResource( 7 )
+anims/WalkRight = SubResource( 8 )
+anims/WalkUp = SubResource( 9 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -32 )
 texture = ExtResource( 2 )
 vframes = 3
 hframes = 9
-frame = 21
+frame = 17
 
-[node name="AudioPlayers" type="Node" parent="."]
-
-[node name="FootSteps" type="AudioStreamPlayer2D" parent="AudioPlayers"]
+[node name="FootSteps" type="AudioStreamPlayer2D" parent="."]
