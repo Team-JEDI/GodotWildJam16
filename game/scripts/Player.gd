@@ -12,6 +12,25 @@ enum state {
 	STUN
 }
 
+onready var walk_sounds = [
+	preload("res://assets/sounds/player_walk_1.wav"), 
+	preload("res://assets/sounds/player_walk_2.wav"),
+	preload("res://assets/sounds/player_walk_3.wav"),
+	preload("res://assets/sounds/player_walk_4.wav"),
+	preload("res://assets/sounds/player_walk_5.wav"),
+	preload("res://assets/sounds/player_walk_6.wav")
+]
+onready var run_sounds = [
+	preload("res://assets/sounds/player_run_1.wav"),
+	preload("res://assets/sounds/player_run_2.wav"),
+	preload("res://assets/sounds/player_run_3.wav"),
+	preload("res://assets/sounds/player_run_4.wav"),
+	preload("res://assets/sounds/player_run_5.wav"),
+	preload("res://assets/sounds/player_run_6.wav")
+]
+
+onready var step_sound_player = $FootSteps
+
 var player_state = state.IDLE
 var player_facing = "Down"
 var last_facing = player_facing
@@ -66,11 +85,20 @@ func _physics_process(delta):
 			player_state = state.WALKING
 		last_facing = player_facing
 
-		# Trigger echo on sprite frames where foot hits ground
+		# Trigger echo and noise on sprite frames where foot hits ground
 		if player_state != state.IDLE and $Sprite.frame in step_frames:
-			var echo_size = 0.5 if Input.is_action_pressed("sprint") else 0.36
-			emit_signal("noise_made", echo_size, position)
-	else:			
+			var is_running = Input.is_action_pressed("sprint")
+			var rand_sounds_index = randi() % 6
+			if is_running:
+				emit_signal("noise_made", 0.5, position)
+				step_sound_player.stream = run_sounds[rand_sounds_index]
+				step_sound_player.play()
+			else:
+				emit_signal("noise_made", 0.36, position)
+				step_sound_player.stream = walk_sounds[rand_sounds_index]
+				step_sound_player.play()
+	else:
 		pass
+	
 	z_index = round(position.y / TILE_SIZE)	
 	
