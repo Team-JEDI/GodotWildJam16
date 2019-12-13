@@ -4,13 +4,16 @@ const TIME_ALERT_LABEL_TEXT := "%d HOUR%s REMAINING"
 
 onready var Echo = preload("res://scenes/Echo.tscn")
 onready var alert = $ui/time_alert
+onready var go_popup = $ui/gameover_popup
 
 export var level_num : int = 0
 
 func _ready():
 	$Character.connect("noise_made", self, "_on_noise_made")
+	$Character.connect("game_over", self, "_on_game_over")
 	GameTimer.connect("noise_made", self, "_on_noise_made")
 	GameTimer.connect("hour_elapsed", self, "_on_hour_elapsed")
+	GameTimer.connect("game_lost", self, "_on_game_over")
 	for ckpt in $checkpoints.get_children():
 		ckpt.connect("game_saved", self, "_on_game_saved")
 	
@@ -47,6 +50,10 @@ func _on_hour_elapsed(hours_left):
 	label_tween.start()
 	yield(label_tween, "tween_all_completed")
 	label_tween.queue_free()
+
+func _on_game_over():
+	go_popup.popup_centered()
+	get_tree().paused = true
 
 func _on_game_saved():
 	

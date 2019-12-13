@@ -14,8 +14,13 @@ var player_state = state.IDLE
 var player_health : int = 4
 
 signal noise_made
+signal game_over
 
 func _process(delta):
+	
+	# DEBUG COMMANDS -- REMOVE THESE BEFORE SHIPPING!!!
+	if Input.is_action_just_pressed("ui_page_down"):
+		emit_signal("game_over")
 	
 	# Handle movement direction
 	var move_vec : Vector2 = Vector2(0, 0)
