@@ -5,6 +5,7 @@ const TIME_ALERT_LABEL_TEXT := "%d HOUR%s REMAINING"
 onready var Echo = preload("res://scenes/Echo.tscn")
 onready var alert = $ui/time_alert
 onready var go_popup = $ui/gameover_popup
+onready var pause_popup = $ui/pause_popup
 
 export var level_num : int = 0
 
@@ -24,6 +25,11 @@ func _ready():
 		pass
 		
 	GameTimer.start_new_game()
+
+func _process(delta):
+	if Input.is_action_just_pressed("ui_cancel"):
+		get_tree().paused = true
+		pause_popup.popup_centered()
 
 func _on_noise_made(echo_scale, location):
 	var new_echo = Echo.instance()
