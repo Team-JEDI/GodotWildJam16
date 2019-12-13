@@ -17,13 +17,11 @@ func _ready():
 	GameTimer.connect("game_lost", self, "_on_game_over")
 	for ckpt in $checkpoints.get_children():
 		ckpt.connect("game_saved", self, "_on_game_saved")
+	$EndZone.connect("body_entered", self, "_on_level_finished")
 	
 	if LoadHelper.is_loading:
 		restore_save_data()
-	else:
-		# Setup new game
-		pass
-		
+	
 	GameTimer.start_new_game()
 
 func _process(delta):
@@ -56,6 +54,11 @@ func _on_hour_elapsed(hours_left):
 	label_tween.start()
 	yield(label_tween, "tween_all_completed")
 	label_tween.queue_free()
+
+func _on_level_finished(body):
+	if body is Player:
+		_on_game_saved()
+		get_tree().change_scene("res://scenes/levels/%d.tscn" % (level_num + 1))
 
 func _on_game_over():
 	go_popup.popup_centered()

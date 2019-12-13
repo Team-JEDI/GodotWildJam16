@@ -8,11 +8,13 @@ func _ready():
 
 func _on_load_game():
 	LoadHelper.is_loading = true
-	get_tree().change_scene("res://scenes/LevelTemplate.tscn")
+	# TODO: Implement level loading code
+	var num = LoadHelper.save_data["level_number"]
+	get_tree().change_scene("res://scenes/levels/%d.tscn" % num)
 
 func _on_new_game():
 	LoadHelper.is_loading = false
-	get_tree().change_scene("res://scenes/LevelTemplate.tscn")
+	get_tree().change_scene("res://scenes/levels/1.tscn")
 
 func _on_view_credits():
 	# TODO: Create credits page
