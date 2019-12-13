@@ -1,7 +1,9 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://scenes/enemy/Blockhead.gd" type="Script" id=1]
+[ext_resource path="res://scripts/enemy/Blockhead.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/enemy/monster_sheet.png" type="Texture" id=2]
+
+
 
 [sub_resource type="Animation" id=4]
 resource_name = "FaceDown"

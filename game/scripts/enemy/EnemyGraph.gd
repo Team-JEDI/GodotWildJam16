@@ -5,7 +5,6 @@ const A_LARGE_NUMBER : float = 1000000.0
 var node_class = preload("res://scenes/enemy/GraphNode.tscn")
 var graph_pos_to_node : Dictionary
 var pos_to_node : Dictionary
-
 var test_path : Array = []
 
 func init(floor_cells, wall_cells):
@@ -38,7 +37,7 @@ func _make_nodes(floor_cells, wall_cells):
 			cell_exists_at[cell] = 1
 	var base_offset := Vector2(16, 16)
 	var local_node_map : Array
-	for cell in floor_cells:
+	for cell in cell_exists_at.keys():
 		var pos_offset : Vector2 = 96 * cell + base_offset
 		var graph_pos_offset : Vector2 = 3 * cell
 		local_node_map = _get_local_node_map(cell, cell_exists_at)
@@ -61,6 +60,10 @@ func _get_local_node_map(cell, cell_exists_at) -> Array:
 		[true, true, true]
 	]
 	var neighbor_cell_exists : bool
+	"""
+	##############
+	# problem code... probably unnecessary anyway.
+	##############
 	for i in range(-1, 2):
 		for j in range(-1, 2):
 			if not (i == 0 and j == 0):
@@ -74,6 +77,7 @@ func _get_local_node_map(cell, cell_exists_at) -> Array:
 							local_node_map[k][j + 1] = false 		
 					elif abs(i) == 1 and abs(j) == 1:
 						local_node_map[i + 1][j + 1] = false
+	"""
 	return local_node_map					
 				
 func _connect_nodes():

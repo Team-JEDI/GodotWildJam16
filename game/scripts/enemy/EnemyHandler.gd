@@ -15,13 +15,15 @@ func _ready():
 	var enemy_ct : int = enemies.size()
 	var character = get_parent().get_node("Character")
 	for i in range(enemy_ct):
-		enemies[i].character = character
+		enemies[i].player = character
 		character.connect("noise_made", enemies[i], "_on_noise_made")
 		_get_and_emit_patrol(i)
+	Events.emit_signal("graph_made")	
 
 func _process(delta):
-	# only need to call if showing patrol paths
-	update()
+	# only need to call update() if showing patrol paths
+	# update()
+	pass
 
 func _get_and_emit_path(_id, from_pos, to_pos):
 	var node_a = $EnemyGraph.get_nearest_node(from_pos)
@@ -47,8 +49,10 @@ func _get_and_emit_patrol(_id):
 	patrols[_id] = patrol		
 	Events.emit_signal("return_patrol", _id, patrol)
 
+"""
 func _draw():
 	_show_patrols()
+"""
 
 func _show_patrols():
 	for enemy_id in patrols.keys():

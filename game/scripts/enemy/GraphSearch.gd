@@ -7,6 +7,8 @@ var priority_queue : Array
 var max_movement : int
 
 func get_new_path(from_node, to_node, _max_movement) -> Array:
+	if from_node == to_node:
+		return []
 	max_movement = _max_movement
 	priority_queue = [from_node]
 	path_ledger = {}
@@ -17,6 +19,7 @@ func get_new_path(from_node, to_node, _max_movement) -> Array:
 	]
 	var success : bool = _generate_shortest_path(from_node, to_node)
 	if not success:
+		print("no success")
 		return []
 	return _assemble_generated_path(to_node)	
 

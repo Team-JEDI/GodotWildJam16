@@ -1,22 +1,28 @@
 extends KinematicBody2D
 
 const WALK_SPEED : float = 80.0
-const RUN_SPEED : float = 300.0
+const RUN_SPEED : float = 270.0
+const GRAB_DIST : float = 60.0
 const LIGHT_FADE_SZ : float = 1000.0
+const CHASE_TIMEOUT_DIST : float = 300.0
+const CHASE_TIMEOUT_TIME : float = 8.0
+const TILE_SIZE : float = 96.0
 
 enum STATES {
-	patrol,
-	return_to_patrol,
-	chase,
-	search,
-	feast,
-	stun
+	PATROL,
+	RETURN_TO_PATROL,
+	CHASE,
+	SEARCH,
+	FEAST,
+	STUN
 }
 
 export var _ID : int = 0
 
-var character
-var state = STATES.return_to_patrol
+var state = STATES.RETURN_TO_PATROL
+var player
+var get_new_chase_path_timer := Timer.new()
+var chase_end_timer := Timer.new()
 var patrol_multipath : Array = []
 var cur_patrol_path : int = 0
 var cur_patrol_node : int = 0
@@ -37,6 +43,11 @@ func _ready():
 	Events.connect("return_path", self, "_store_path")
 	Events.connect("return_patrol", self, "_store_patrol")
 	Events.emit_signal("get_patrol", _ID)
+	chase_end_timer.connect("timeout", self, "_chase_end")
+	add_child(chase_end_timer)
+	chase_end_timer.set_one_shot(true)
+	add_child(get_new_chase_path_timer)
+	get_new_chase_path_timer.set_one_shot(true)
 
 func _store_patrol(_id, _patrol_multipath):
 	if _id == _ID:
@@ -44,28 +55,38 @@ func _store_patrol(_id, _patrol_multipath):
 
 func _store_path(_id, _path):
 	if _id == _ID:
+		cur_node = 0
 		cur_path = _path
 
 func _physics_process(delta):
-	if state == STATES.patrol:
+	if state == STATES.PATROL:
 		move = _patrol(delta)
-	elif state == STATES.return_to_patrol:
+	elif state == STATES.RETURN_TO_PATROL:
 		move = _return_to_patrol(delta)	
-	elif state == STATES.chase:
+	elif state == STATES.CHASE:
 		move = _chase(delta)
-	elif state == STATES.search:
+	elif state == STATES.SEARCH:
 		move = _search()
-	elif state == STATES.feast:
+	elif state == STATES.FEAST:
 		_feast()
-	elif state == STATES.stun:
+		move = Vector2.ZERO
+	elif state == STATES.STUN:
 		_stun()
+		move = Vector2.ZERO
 	else:
 		print("**Error** Monster state is " + String(state))	
 		print("This is a non-state.")
-	_control_anim_direction()	
+	if player.position.distance_to(position) <= GRAB_DIST * 2 \
+	and state != STATES.CHASE \
+	and state != STATES.FEAST \
+	and state != STATES.STUN:
+		state = STATES.CHASE	
+		just_changed_state = true
+	_control_sprite_animation()	
 	move_and_slide(move)
+	z_index = round(position.y / TILE_SIZE)	
 
-func _control_anim_direction():
+func _control_sprite_animation():
 	var new_sprite_dir : int
 	var moving_angle : float = move.angle()
 	if moving_angle < 0:
@@ -114,20 +135,20 @@ func _return_to_patrol(delta):
 	if just_changed_state:
 		just_changed_state = false
 		print("Enemy %s " % name + "state changed to [return to patrol]")
-		cur_path = []
-		cur_node = 0
 		Events.emit_signal("get_path", _ID, position, patrol_multipath[cur_patrol_path][cur_patrol_node].position)
-	if cur_path.size() > 0:
+	if cur_path.size() > cur_node:
 		var target_node = cur_path[cur_node]
 		move_vec = _get_move_to_node(target_node, WALK_SPEED, delta, "return")
 		if cur_node == cur_path.size():
-			state = STATES.patrol
+			state = STATES.PATROL
 			just_changed_state = true
 	return move_vec		
 
 func _on_noise_made(echo_scale, location):
-	if state != STATES.chase and position.distance_to(character.position) <= LIGHT_FADE_SZ * echo_scale * 0.7:
-		state = STATES.chase
+	if state != STATES.CHASE \
+	and state != STATES.FEAST \
+	and position.distance_to(player.position) <= LIGHT_FADE_SZ * echo_scale * 0.6:
+		state = STATES.CHASE
 		just_changed_state = true
 
 func _chase(delta):
@@ -135,20 +156,38 @@ func _chase(delta):
 	if just_changed_state:
 		just_changed_state = false
 		print("Enemy %s " % name + "state changed to [chase]")
-	cur_path = []
-	cur_node = 0
-	if position.distance_to(character.position) > RUN_SPEED * delta + 100:
-		Events.emit_signal("get_path", _ID, position, character.position)
-		if cur_path.size() > 0:
+	var distance_to_player : float = position.distance_to(player.position)
+	if distance_to_player > RUN_SPEED * delta + GRAB_DIST:
+		if distance_to_player >= CHASE_TIMEOUT_DIST:
+			if chase_end_timer.is_paused():
+				chase_end_timer.set_paused(false)
+				chase_end_timer.start(CHASE_TIMEOUT_TIME)
+		elif not chase_end_timer.is_paused():	
+			chase_end_timer.set_paused(true)
+		if get_new_chase_path_timer.is_stopped():	
+			Events.emit_signal("get_path", _ID, position, player.position)
+			get_new_chase_path_timer.start(0.2)
+		if cur_path.size() > cur_node:
 			var target_node = cur_path[cur_node]	
 			move_vec = _get_move_to_node(target_node, RUN_SPEED, delta, "chase")
+	else:		
+		player.player_state = player.state.STUN
+		state = STATES.FEAST
+		just_changed_state = true
 	return move_vec
 
+func _chase_end():
+	state = STATES.RETURN_TO_PATROL
+	just_changed_state = true
+
 func _search():
+	# no time to do this
 	pass
 
 func _feast():
-	pass
+	if just_changed_state:
+		print("Enemy %s " % name + "state changed to [feast]")
+		just_changed_state = false
 
 func _stun():
 	pass

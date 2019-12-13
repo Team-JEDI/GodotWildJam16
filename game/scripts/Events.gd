@@ -6,3 +6,4 @@ signal get_patrol
 signal get_path
 signal return_path
 signal return_patrol
+signal graph_made
