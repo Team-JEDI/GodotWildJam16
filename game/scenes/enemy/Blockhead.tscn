@@ -3,9 +3,7 @@
 [ext_resource path="res://scripts/enemy/Blockhead.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/enemy/monster_sheet.png" type="Texture" id=2]
 
-
-
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 resource_name = "FaceDown"
 length = 0.7
 loop = true
@@ -51,8 +49,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "FaceRight"
+[sub_resource type="Animation" id=6]
 length = 0.7
 loop = true
 step = 0.05
@@ -81,8 +78,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "FaceUp"
+[sub_resource type="Animation" id=4]
 length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -110,7 +106,7 @@ frame = 9
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "FaceDown"
-anims/FaceDown = SubResource( 4 )
+anims/FaceDown = SubResource( 5 )
 anims/FaceLeft = SubResource( 2 )
-anims/FaceRight = SubResource( 1 )
-anims/FaceUp = SubResource( 3 )
+anims/FaceRight = SubResource( 6 )
+anims/FaceUp = SubResource( 4 )

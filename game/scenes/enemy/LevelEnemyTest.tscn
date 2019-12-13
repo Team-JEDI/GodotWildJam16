@@ -6,7 +6,7 @@
 [ext_resource path="res://scenes/enemy/EnemyGraph.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/enemy/GraphNode.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/test_z/Tilemaps.gd" type="Script" id=7]
+[ext_resource path="res://scripts/Tilemaps.gd" type="Script" id=7]
 [ext_resource path="res://scenes/enemy/TestEnemyTM.tscn" type="PackedScene" id=8]
 
 [node name="LevelEnemyTest" type="Node2D"]
@@ -23,7 +23,6 @@ position = Vector2( 1136, 848 )
 [node name="EnemyGraph" parent="EnemyHandler" instance=ExtResource( 4 )]
 
 [node name="EnemyPatrols" type="Node2D" parent="EnemyHandler"]
-editor/display_folded = true
 
 [node name="Patrol_0" type="Node2D" parent="EnemyHandler/EnemyPatrols"]
 editor/display_folded = true

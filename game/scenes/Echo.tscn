@@ -10,5 +10,7 @@ script = ExtResource( 1 )
 texture = ExtResource( 2 )
 texture_scale = 0.01
 mode = 2
+range_layer_min = -10
+range_layer_max = 10
 
 [node name="Tween" type="Tween" parent="."]

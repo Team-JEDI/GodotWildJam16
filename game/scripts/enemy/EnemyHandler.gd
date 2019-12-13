@@ -8,7 +8,7 @@ func _ready():
 	var tilemaps = get_parent().get_node("Tilemaps")
 	var tm_floor = tilemaps.get_node("Floor")
 	var tm_wall = tilemaps.get_node("Walls")
-	$EnemyGraph.init(tm_floor.get_used_cells(), tm_wall.get_used_cells())
+	$EnemyGraph.init(tm_floor.get_used_cells(), tm_wall.get_used_cells(), tm_wall)
 	Events.connect("get_path", self, "_get_and_emit_path")
 	Events.connect("get_patrol", self, "_get_and_emit_patrol")
 	var enemies : Array = $Enemies.get_children()

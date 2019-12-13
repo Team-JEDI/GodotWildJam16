@@ -147,7 +147,7 @@ func _return_to_patrol(delta):
 func _on_noise_made(echo_scale, location):
 	if state != STATES.CHASE \
 	and state != STATES.FEAST \
-	and position.distance_to(player.position) <= LIGHT_FADE_SZ * echo_scale * 0.6:
+	and position.distance_to(player.position) <= LIGHT_FADE_SZ * echo_scale * 0.48:
 		state = STATES.CHASE
 		just_changed_state = true
 

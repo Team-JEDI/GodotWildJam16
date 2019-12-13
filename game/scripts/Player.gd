@@ -36,6 +36,9 @@ var player_facing = "Down"
 var last_facing = player_facing
 var player_health : int = 4
 var step_frames : Array = [1, 5, 10, 14, 19, 23]
+var holding_item : String = "bell"
+var key_count : int = 0
+var has_level_end_key : bool = false
 
 signal noise_made
 signal game_over
@@ -61,6 +64,18 @@ func _physics_process(delta):
 		if Input.is_action_pressed("move_right"):
 			player_facing = "Right"
 			move_vec.x += 1
+
+		# Handle using items	
+		if Input.is_action_just_pressed("switch_item"):	
+			if holding_item == "bell":
+				holding_item = "keys"
+				print("player is holding [keys]")
+			else:
+				holding_item = "bell"	
+				print("player is holding [bell]")
+		if Input.is_action_just_pressed("use_item"):	
+			if holding_item == "bell":
+				emit_signal("noise_made", 1.0, position)
 	
 		# Handle movement speed
 		move_vec = move_vec.normalized()

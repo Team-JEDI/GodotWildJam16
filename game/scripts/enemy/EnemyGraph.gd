@@ -7,8 +7,8 @@ var graph_pos_to_node : Dictionary
 var pos_to_node : Dictionary
 var test_path : Array = []
 
-func init(floor_cells, wall_cells):
-	_make_nodes(floor_cells, wall_cells)
+func init(floor_cells, wall_cells, wall_tilemap):
+	_make_nodes(floor_cells, wall_cells, wall_tilemap)
 	_connect_nodes()
 
 func get_nearest_node(obj_pos):
@@ -30,10 +30,20 @@ func _process(delta):
 		_get_new_test_path()
 """
 	
-func _make_nodes(floor_cells, wall_cells):
+func _make_nodes(floor_cells, wall_cells, wall_tilemap):
 	var cell_exists_at : Dictionary
+	var scaled_wall_cells : Array = []
+	var vertical_fence_index : int = 4
+	for cell in wall_cells:
+		var cell_above_i = wall_cells.find(cell - Vector2(0, 1))
+		if wall_tilemap.get_cellv(cell) == vertical_fence_index \
+		or (cell_above_i != -1 and wall_tilemap.get_cellv(wall_cells[cell_above_i]) == vertical_fence_index):
+			var scaled_cell_1 = cell * Vector2(1, 2)
+			scaled_wall_cells.append(scaled_cell_1)
+		var scaled_cell_2 = cell * Vector2(1, 2) + Vector2(0, 1)
+		scaled_wall_cells.append(scaled_cell_2)
 	for cell in floor_cells:
-		if not cell in wall_cells:
+		if not cell in scaled_wall_cells:
 			cell_exists_at[cell] = 1
 	var base_offset := Vector2(16, 16)
 	var local_node_map : Array
