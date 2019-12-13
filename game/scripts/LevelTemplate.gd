@@ -1,6 +1,9 @@
 extends Node2D
 
+const TIME_ALERT_LABEL_TEXT := "%d HOUR%s REMAINING"
+
 onready var Echo = preload("res://scenes/Echo.tscn")
+onready var alert = $ui/time_alert
 
 export var level_num : int = 0
 
@@ -16,6 +19,8 @@ func _ready():
 	else:
 		# Setup new game
 		pass
+		
+	GameTimer.start_new_game()
 
 func _on_noise_made(echo_scale, location):
 	var new_echo = Echo.instance()
@@ -24,8 +29,24 @@ func _on_noise_made(echo_scale, location):
 	new_echo.trigger_echo(echo_scale)
 
 func _on_hour_elapsed(hours_left):
-	# TODO: Create popup telling players number of hours to midnight
-	pass
+	
+	alert.text = TIME_ALERT_LABEL_TEXT % [hours_left, "s" if hours_left > 1 else ""]
+	
+	# Fade in
+	var label_tween = Tween.new()
+	add_child(label_tween)
+	label_tween.interpolate_property(alert, "modulate:a", 0.0, 1.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	label_tween.start()
+	yield(label_tween, "tween_all_completed")
+	
+	# Wait a few seconds
+	yield(get_tree().create_timer(3.0), "timeout")
+	
+	# Fade out
+	label_tween.interpolate_property(alert, "modulate:a", 1.0, 0.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	label_tween.start()
+	yield(label_tween, "tween_all_completed")
+	label_tween.queue_free()
 
 func _on_game_saved():
 	

@@ -18,4 +18,21 @@ tile_data = PoolIntArray( -786423, 0, 0, -786422, 0, 0, -786421, 0, 0, -655384, 
 [node name="Character" parent="." instance=ExtResource( 1 )]
 position = Vector2( 524.847, 359.266 )
 
-[node name="echos" type="Node2D" parent="."]
+[node name="checkpoints" type="Node2D" parent="."]
+
+[node name="enemies" type="Node2D" parent="."]
+
+[node name="ui" type="CanvasLayer" parent="."]
+
+[node name="time_alert" type="Label" parent="ui"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 840.0
+text = "X HOURS UNTIL MIDNIGHT"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
