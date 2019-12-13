@@ -21,6 +21,10 @@ tile_data = PoolIntArray( -786423, 0, 0, -786422, 0, 0, -786421, 0, 0, -655384, 
 [node name="TestEnemyMap" parent="." instance=ExtResource( 4 )]
 tile_data = PoolIntArray( 196616, 3, 0 )
 
+[node name="EndZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EndZone"]
+
 [node name="Character" parent="." instance=ExtResource( 5 )]
 position = Vector2( 524.847, 359.266 )
 
@@ -29,7 +33,6 @@ position = Vector2( 524.847, 359.266 )
 [node name="enemies" type="Node2D" parent="."]
 
 [node name="ui" type="CanvasLayer" parent="."]
-editor/display_folded = true
 
 [node name="time_alert" type="Label" parent="ui"]
 modulate = Color( 1, 1, 1, 0 )
