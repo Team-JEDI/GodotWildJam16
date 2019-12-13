@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/GameOverPopup.gd" type="Script" id=1]
+
+[node name="GameOverPopup" type="PopupDialog"]
+pause_mode = 2
+rect_min_size = Vector2( 400, 300 )
+popup_exclusive = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.3
+text = "GAME OVER"
+align = 1
+valign = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.3
+anchor_top = 0.3
+anchor_right = 0.7
+anchor_bottom = 1.0
+custom_constants/separation = 32
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CkptBtn" type="Button" parent="VBoxContainer"]
+margin_top = 69.0
+margin_right = 160.0
+margin_bottom = 89.0
+text = "RESTORE CHECKPOINT"
+
+[node name="QuitBtn" type="Button" parent="VBoxContainer"]
+margin_top = 121.0
+margin_right = 160.0
+margin_bottom = 141.0
+text = "QUIT TO MENU"
+[connection signal="button_up" from="VBoxContainer/CkptBtn" to="." method="_on_ckpt_btn"]
+[connection signal="button_up" from="VBoxContainer/QuitBtn" to="." method="_on_quit_btn"]

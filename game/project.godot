@@ -10,24 +10,31 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "KinematicBody2D",
+"class": "Creature",
+"language": "GDScript",
+"path": "res://scripts/Creature.gd"
+}, {
+"base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://scripts/Player.gd"
 } ]
 _global_script_class_icons={
+"Creature": "",
 "Player": ""
 }
 
 [application]
 
 config/name="wildjam16"
-run/main_scene="res://scenes/LevelTemplate.tscn"
+run/main_scene="res://scenes/MainMenu.tscn"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
 
 [autoload]
 
-Events="*res://scripts/Events.gd"
+GameTimer="*res://scripts/GameTimer.gd"
+LoadHelper="*res://scripts/LoadHelper.gd"
 
 [display]
 
