@@ -11,6 +11,7 @@ enum state {
 }
 
 var player_state = state.IDLE
+var player_health : int = 4
 
 signal noise_made
 
