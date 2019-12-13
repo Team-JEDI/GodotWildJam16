@@ -171,7 +171,6 @@ func _chase(delta):
 			var target_node = cur_path[cur_node]	
 			move_vec = _get_move_to_node(target_node, RUN_SPEED, delta, "chase")
 	else:		
-		player.player_state = player.state.STUN
 		state = STATES.FEAST
 		just_changed_state = true
 	return move_vec
@@ -186,6 +185,7 @@ func _search():
 
 func _feast():
 	if just_changed_state:
+		player.player_state = player.state.STUN
 		print("Enemy %s " % name + "state changed to [feast]")
 		just_changed_state = false
 
