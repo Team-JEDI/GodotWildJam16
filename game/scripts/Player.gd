@@ -39,6 +39,7 @@ var step_frames : Array = [1, 5, 10, 14, 19, 23]
 var holding_item : String = "bell"
 var key_count : int = 0
 var has_level_end_key : bool = false
+var last_step_frame : int = 0
 
 signal noise_made
 signal game_over
@@ -46,6 +47,7 @@ signal game_over
 func _ready():
 	Events.connect("item_destroy", self, "_on_item_destroy")
 	Events.connect("item_pickup", self, "_on_item_pickup")
+	$Keys.hide()
 
 func _physics_process(delta):
 	
@@ -72,9 +74,13 @@ func _physics_process(delta):
 		# Handle using items	
 		if Input.is_action_just_pressed("switch_item"):	
 			if holding_item == "bell":
+				$Bell.hide()
+				$Keys.show()
 				holding_item = "keys"
 				print("player is holding [keys]")
 			else:
+				$Bell.show()
+				$Keys.hide()
 				holding_item = "bell"	
 				print("player is holding [bell]")
 		if Input.is_action_just_pressed("use_item"):	
@@ -109,16 +115,18 @@ func _physics_process(delta):
 
 		# Trigger echo and noise on sprite frames where foot hits ground
 		if player_state != state.IDLE and $Sprite.frame in step_frames:
-			var is_running = Input.is_action_pressed("sprint")
-			var rand_sounds_index = randi() % 6
-			if is_running:
-				emit_signal("noise_made", 0.5, position)
-				step_sound_player.stream = run_sounds[rand_sounds_index]
-				step_sound_player.play()
-			else:
-				emit_signal("noise_made", 0.36, position)
-				step_sound_player.stream = walk_sounds[rand_sounds_index]
-				step_sound_player.play()
+			if $Sprite.frame != last_step_frame:
+				var is_running = Input.is_action_pressed("sprint")
+				var rand_sounds_index = randi() % 6
+				if is_running:
+					emit_signal("noise_made", 0.5, position)
+					step_sound_player.stream = run_sounds[rand_sounds_index]
+					step_sound_player.play()
+				else:
+					emit_signal("noise_made", 0.36, position)
+					step_sound_player.stream = walk_sounds[rand_sounds_index]
+					step_sound_player.play()
+				last_step_frame = $Sprite.frame	
 	else:
 		# probably going to hide both creature and player sprites and show creature holding player sprite 
 		# player devouring sounds
