@@ -33,7 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="wildjam16"
-run/main_scene="res://scenes/LevelTemplate.tscn"
+run/main_scene="res://scenes/MainMenu.tscn"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
 
