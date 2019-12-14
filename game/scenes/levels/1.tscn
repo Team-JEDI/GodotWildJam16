@@ -50,6 +50,31 @@ position = Vector2( 1296, 676 )
 [node name="TutorialTriggers" type="Node2D" parent="." index="7"]
 position = Vector2( 75.7058, 90.126 )
 
-[node name="VOTriggerArea" parent="TutorialTriggers" index="0" instance=ExtResource( 5 )]
+[node name="VOTriggerArea1" parent="TutorialTriggers" index="0" instance=ExtResource( 5 )]
 position = Vector2( 2104.13, 2186.28 )
 vo_line_num = 1
+
+[node name="VOTriggerArea2" parent="TutorialTriggers" index="1" instance=ExtResource( 5 )]
+position = Vector2( 1128.66, 3121.75 )
+scale = Vector2( 2.4, 1 )
+vo_line_num = 2
+
+[node name="VOTriggerArea3" parent="TutorialTriggers" index="2" instance=ExtResource( 5 )]
+position = Vector2( 1123.21, 2681.8 )
+scale = Vector2( 2.4, 1 )
+vo_line_num = 3
+
+[node name="VOTriggerArea4" parent="TutorialTriggers" index="3" instance=ExtResource( 5 )]
+position = Vector2( 1221.7, 801.059 )
+scale = Vector2( 2, 2 )
+vo_line_num = 4
+
+[node name="VOTriggerArea5" parent="TutorialTriggers" index="4" instance=ExtResource( 5 )]
+position = Vector2( 1220.08, 650.709 )
+scale = Vector2( 2, 2 )
+vo_line_num = 5
+
+[node name="VOTriggerArea6" parent="TutorialTriggers" index="5" instance=ExtResource( 5 )]
+position = Vector2( 1216.83, 491.285 )
+scale = Vector2( 2, 2 )
+vo_line_num = 6
