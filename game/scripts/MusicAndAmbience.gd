@@ -127,6 +127,6 @@ func stop_all_music():
 
 func set_play_ambience(setting : bool):
 	if setting == true and not ambience_player.is_playing():
-		#ambience_player.play()
+		# gotta do stuff here
 		pass
 
