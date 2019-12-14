@@ -118,7 +118,6 @@ func play_song(song_name):
 	# "chase"      : fracti silentium
 	# "post chase" : timor mortis
 	# "somber"     : amor fati
-	# AudioServer.set_bus_volume_db()
 	song_queue.append(song_name)
 
 func stop_all_music():
