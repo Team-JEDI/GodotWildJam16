@@ -21,4 +21,4 @@ position = Vector2( 0, 450 )
 shape = SubResource( 1 )
 
 [node name="Character" parent="." index="6"]
-position = Vector2( 1685, 5864 )
+position = Vector2( 1684, 5857 )
