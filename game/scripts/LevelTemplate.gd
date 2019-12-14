@@ -9,6 +9,8 @@ onready var pause_popup = $ui/pause_popup
 
 export var level_num : int = 0
 
+var darkness_mat = preload("res://assets/textures/darkness_material.tres")
+
 func _ready():
 	$Character.connect("noise_made", self, "_on_noise_made")
 	$Character.connect("game_over", self, "_on_game_over")
@@ -23,6 +25,8 @@ func _ready():
 		restore_save_data()
 	
 	GameTimer.start_new_game()
+
+	_set_materials_for_lighting()
 
 func _process(delta):
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -91,3 +95,15 @@ func restore_save_data():
 		enemies[index].position = LoadHelper.save_data["enemy_locs"][index]
 	
 	GameTimer.global_timer.start()
+
+func _set_materials_for_lighting():
+	for child in $Tilemaps.get_children():
+		child.set_material(darkness_mat)
+	for child in $Interactables.get_children():
+		for subchild in child.get_children():
+			if subchild is Sprite:
+				subchild.set_material(darkness_mat)	
+	for child in $EnemyHandler/Enemies.get_children():
+		for subchild in child.get_children():
+			if subchild is Sprite:
+				subchild.set_material(darkness_mat)	

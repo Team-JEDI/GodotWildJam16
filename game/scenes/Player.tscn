@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/textures/player_sprites.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 25.8207, 23.7878 )
+extents = Vector2( 23.0467, 23.7878 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "IdleDown"

@@ -7,3 +7,4 @@ signal get_path
 signal return_path
 signal return_patrol
 signal graph_made
+signal use_item

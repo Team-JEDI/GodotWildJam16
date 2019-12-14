@@ -43,6 +43,10 @@ var has_level_end_key : bool = false
 signal noise_made
 signal game_over
 
+func _ready():
+	Events.connect("item_destroy", self, "_on_item_destroy")
+	Events.connect("item_pickup", self, "_on_item_pickup")
+
 func _physics_process(delta):
 	
 	# DEBUG COMMANDS -- REMOVE THESE BEFORE SHIPPING!!!
@@ -75,7 +79,10 @@ func _physics_process(delta):
 				print("player is holding [bell]")
 		if Input.is_action_just_pressed("use_item"):	
 			if holding_item == "bell":
-				emit_signal("noise_made", 1.0, position)
+				emit_signal("noise_made", 1.2, position)
+				Events.emit_signal("use_item", holding_item)	
+			elif holding_item == "keys" and key_count > 0:
+				Events.emit_signal("use_item", holding_item)	
 	
 		# Handle movement speed
 		move_vec = move_vec.normalized()
@@ -113,7 +120,21 @@ func _physics_process(delta):
 				step_sound_player.stream = walk_sounds[rand_sounds_index]
 				step_sound_player.play()
 	else:
+		# probably going to hide both creature and player sprites and show creature holding player sprite 
+		# player devouring sounds
+		# handle bell mash to get away from creature
 		pass
 	
 	z_index = round(position.y / TILE_SIZE)	
-	
+
+func _on_item_destroy(item):
+	if item == "key":
+		key_count -= 1
+
+func _on_item_pickup(item):
+	if item == "key":
+		print("key get")
+		key_count += 1
+	elif item == "level_end_key":
+		print("level end key get")
+		has_level_end_key = true	
