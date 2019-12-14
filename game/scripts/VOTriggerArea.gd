@@ -4,19 +4,22 @@ class_name VOTriggerArea
 export var vo_line_num : int = 0
 
 onready var vo_lines = [
-	preload("res://assets/sounds/vo_line_01.wav"),
-#	preload("res://assets/sounds/vo_line_02.wav"),
-#	preload("res://assets/sounds/vo_line_03.wav"),
-#	preload("res://assets/sounds/vo_line_04.wav"),
-#	preload("res://assets/sounds/vo_line_05.wav"),
-#	preload("res://assets/sounds/vo_line_06.wav"),
-#	preload("res://assets/sounds/vo_line_07.wav"),
-#	preload("res://assets/sounds/vo_line_08.wav"),
-#	preload("res://assets/sounds/vo_line_09.wav"),
-#	preload("res://assets/sounds/vo_line_10.wav"),
-#	preload("res://assets/sounds/vo_line_11.wav"),
-#	preload("res://assets/sounds/vo_line_12.wav"),
-#	preload("res://assets/sounds/vo_line_13.wav")
+	preload("res://assets/sounds/vo_line_01.ogg"),
+	preload("res://assets/sounds/vo_line_02.ogg"),
+	preload("res://assets/sounds/vo_line_03.ogg"),
+	preload("res://assets/sounds/vo_line_04.ogg"),
+	preload("res://assets/sounds/vo_line_05.ogg"),
+	preload("res://assets/sounds/vo_line_06.ogg"),
+	preload("res://assets/sounds/vo_line_07.ogg"),
+	preload("res://assets/sounds/vo_line_08.ogg"),
+	preload("res://assets/sounds/vo_line_09.ogg"),
+	preload("res://assets/sounds/vo_line_10.ogg"),
+	preload("res://assets/sounds/vo_line_11.ogg"),
+	preload("res://assets/sounds/vo_line_12.ogg"),
+	preload("res://assets/sounds/vo_line_13.ogg"),
+	preload("res://assets/sounds/vo_line_14.ogg"),
+	preload("res://assets/sounds/vo_line_15.ogg"),
+	preload("res://assets/sounds/vo_line_16.ogg")
 ]
 onready var audio_player := $AudioStreamPlayer
 
