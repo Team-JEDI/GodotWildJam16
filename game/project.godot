@@ -18,16 +18,22 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://scripts/Player.gd"
+}, {
+"base": "Area2D",
+"class": "VOTriggerArea",
+"language": "GDScript",
+"path": "res://scripts/VOTriggerArea.gd"
 } ]
 _global_script_class_icons={
 "Creature": "",
-"Player": ""
+"Player": "",
+"VOTriggerArea": ""
 }
 
 [application]
 
 config/name="wildjam16"
-run/main_scene="res://scenes/LevelTemplate.tscn"
+run/main_scene="res://scenes/MainMenu.tscn"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
 
