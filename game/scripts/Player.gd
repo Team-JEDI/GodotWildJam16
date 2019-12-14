@@ -80,9 +80,9 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("use_item"):	
 			if holding_item == "bell":
 				emit_signal("noise_made", 1.2, position)
-				Events.emit_signal("use_item", holding_item)	
-			elif holding_item == "keys" and key_count > 0:
-				Events.emit_signal("use_item", holding_item)	
+				Events.emit_signal("use_item", holding_item, key_count, has_level_end_key)	
+			elif holding_item == "keys":
+				Events.emit_signal("use_item", holding_item, key_count, has_level_end_key)	
 	
 		# Handle movement speed
 		move_vec = move_vec.normalized()
@@ -130,11 +130,13 @@ func _physics_process(delta):
 func _on_item_destroy(item):
 	if item == "key":
 		key_count -= 1
+	if item == "level end key":
+		has_level_end_key = false	
 
 func _on_item_pickup(item):
 	if item == "key":
 		print("key get")
 		key_count += 1
-	elif item == "level_end_key":
+	elif item == "level end key":
 		print("level end key get")
 		has_level_end_key = true	

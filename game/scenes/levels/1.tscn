@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/LevelTemplate.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Gate.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/Key.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/LevelEndKey.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/EndGate.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 30, 30 )
@@ -29,19 +30,18 @@ position = Vector2( 0, 450 )
 shape = SubResource( 1 )
 
 [node name="Character" parent="." index="5"]
-position = Vector2( 1679, 5846 )
+position = Vector2( 2179, 2267 )
 
-[node name="ExitGate" parent="Interactables" index="0" instance=ExtResource( 2 )]
-position = Vector2( 1295, 672 )
-init_state = "locked"
-
-[node name="EntranceGate" parent="Interactables" index="1" instance=ExtResource( 2 )]
+[node name="EntranceGate" parent="Interactables" index="0" instance=ExtResource( 2 )]
 position = Vector2( 1680, 6047 )
 init_state = "locked"
 openable = false
 
-[node name="Key" parent="Interactables" index="2" instance=ExtResource( 3 )]
-position = Vector2( 2211, 2106 )
-
-[node name="Gate" parent="Interactables" index="3" instance=ExtResource( 2 )]
+[node name="Gate" parent="Interactables" index="1" instance=ExtResource( 2 )]
 position = Vector2( 2352, 2403 )
+
+[node name="LevelEndKey" parent="Interactables" index="2" instance=ExtResource( 3 )]
+position = Vector2( 2215, 2029 )
+
+[node name="EndGate" parent="Interactables" index="3" instance=ExtResource( 4 )]
+position = Vector2( 1296, 676 )

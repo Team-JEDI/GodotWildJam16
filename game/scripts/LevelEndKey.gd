@@ -7,5 +7,5 @@ func _process(delta):
 			if body.name == "Character": 
 				print("Interacting with %s" % name)
 				$AudioStreamPlayer2D.play() 
-				Events.emit_signal("item_pickup", "key")
+				Events.emit_signal("item_pickup", "level end key")
 				queue_free()
