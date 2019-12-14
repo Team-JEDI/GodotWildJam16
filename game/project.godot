@@ -42,6 +42,7 @@ config/icon="res://icon.png"
 Events="*res://scripts/Events.gd"
 GameTimer="*res://scripts/GameTimer.gd"
 LoadHelper="*res://scripts/LoadHelper.gd"
+MusicAndAmbience="*res://scripts/MusicAndAmbience.gd"
 
 [display]
 
