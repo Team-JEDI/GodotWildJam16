@@ -171,8 +171,7 @@ func _physics_process(delta):
 	prev_player_state = player_state		
 	z_index = round(position.y / TILE_SIZE)	
 	if player_health <= 0:
-		# TODO: restart level
-		pass
+		emit_signal("game_over")
 
 func _on_item_destroy(item):
 	if item == "key":
