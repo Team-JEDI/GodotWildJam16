@@ -22,6 +22,9 @@ func _ready():
 	$EndZone.connect("body_entered", self, "_on_level_finished")
 	for enemy in $EnemyHandler/Enemies.get_children():
 		enemy.connect("enemy_noise_made", self, "_on_noise_made")
+	for interactable in $Interactables.get_children():
+		if "Key" in interactable.name:
+			interactable.connect("key_noise_made", self, "_on_noise_made")	
 	
 	GameTimer.start_new_game()
 	

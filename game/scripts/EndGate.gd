@@ -13,6 +13,12 @@ var prev_state
 var player_has_level_end_key : bool = false
 onready var collis_shape = get_node("CollisionShape2D")
 
+var sounds : Array = [
+	preload("res://assets/sounds/Gate_Unlock.ogg"),
+	preload("res://assets/sounds/Gate_Open.ogg"),
+	preload("res://assets/sounds/Gate_Close.ogg")
+]
+
 func _ready():
 	_manage_sprites_and_collis()	
 	z_index = round(position.y / 96.0)
@@ -55,10 +61,14 @@ func _process(delta):
 				if Input.is_action_just_pressed("interact"):
 					print("Interacting with %s" % name)
 					if state == states.OPEN:
+						$AudioStreamPlayer2D.set_stream(sounds[2])
+						$AudioStreamPlayer2D.play()
 						$AnimationPlayer.play("Close")
 						$UnlockedSprite.material = null
 						state = states.CLOSED
 					elif state == states.CLOSED:
+						$AudioStreamPlayer2D.set_stream(sounds[1])
+						$AudioStreamPlayer2D.play()
 						$UnlockedSprite.show()
 						$AnimationPlayer.play("Open")
 						$UnlockedSprite.material = null
@@ -67,6 +77,8 @@ func _process(delta):
 						# make sound
 						pass
 				elif recently_used_item == "keys" and state == states.LOCKED and player_has_level_end_key:
+					$AudioStreamPlayer2D.set_stream(sounds[0])
+					$AudioStreamPlayer2D.play()
 					state = states.CLOSED
 					$UnlockedSprite.material = null
 					Events.emit_signal("item_destroy", "level end key")
