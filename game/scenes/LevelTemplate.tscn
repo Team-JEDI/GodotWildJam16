@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/textures/darkness_material.tres" type="Material" id=1]
 [ext_resource path="res://scripts/LevelTemplate.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://scripts/enemy/EnemyHandler.gd" type="Script" id=10]
 [ext_resource path="res://scenes/enemy/EnemyGraph.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=12]
+[ext_resource path="res://assets/sounds/Ambience.ogg" type="AudioStream" id=13]
 
 [node name="Level" type="Node2D"]
 material = ExtResource( 1 )
@@ -30,7 +31,6 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 
 [node name="Trees" parent="Tilemaps" instance=ExtResource( 7 )]
 
 [node name="EndZone" type="Area2D" parent="."]
-editor/display_folded = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EndZone"]
 
@@ -68,3 +68,8 @@ script = ExtResource( 10 )
 position = Vector2( 906, 477 )
 
 [node name="Interactables" type="Node2D" parent="."]
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+
+[node name="Ambiance" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
