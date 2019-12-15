@@ -19,6 +19,7 @@ var song_name_to_song_stream : Dictionary = {
 var _players : Array = [
 	AudioStreamPlayer.new(),
 	AudioStreamPlayer.new(),
+	AudioStreamPlayer.new(),
 	AudioStreamPlayer.new()
 ]
 var bus_name_to_bus_index : Dictionary = {
