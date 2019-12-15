@@ -2,6 +2,7 @@ extends Area2D
 class_name VOTriggerArea
 
 export var vo_line_num : int = 0
+var already_triggered : bool = false
 
 onready var audio_player := $AudioStreamPlayer
 
@@ -10,9 +11,11 @@ func _ready():
 
 func _on_body_entered(body):
 	
-	print("Player entered VO area %d" % vo_line_num)
-	
-	if body is Player:
+	if body is Player and not already_triggered:
+		
+		print("Player entered VO area %d" % vo_line_num)
+		already_triggered = true
+		
 		match vo_line_num:
 			1:
 				play_line(0)
