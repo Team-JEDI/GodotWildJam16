@@ -8,7 +8,6 @@ func _ready():
 
 func _on_load_game():
 	LoadHelper.is_loading = true
-	# TODO: Implement level loading code
 	var num = LoadHelper.save_data["level_number"]
 	get_tree().change_scene("res://scenes/levels/%d.tscn" % num)
 

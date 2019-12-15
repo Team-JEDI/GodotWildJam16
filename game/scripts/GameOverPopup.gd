@@ -2,8 +2,8 @@ extends PopupDialog
 
 func _on_ckpt_btn():
 	LoadHelper.is_loading = true
-	# TODO: Implement level loading code
-	get_tree().change_scene("res://scenes/LevelTemplate.tscn")
+	var num = LoadHelper.save_data["level_number"]
+	get_tree().change_scene("res://scenes/levels/%d.tscn" % num)
 
 func _on_quit_btn():
 	get_tree().change_scene("res://scenes/MainMenu.tscn")
