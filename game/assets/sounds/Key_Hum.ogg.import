@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Key_Hum.ogg-fcf4c0bae33bb908f9cf860c3ddb84c5.oggstr"
+
+[deps]
+
+source_file="res://assets/sounds/Key_Hum.ogg"
+dest_files=[ "res://.import/Key_Hum.ogg-fcf4c0bae33bb908f9cf860c3ddb84c5.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

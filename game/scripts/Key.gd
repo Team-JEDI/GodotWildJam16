@@ -1,6 +1,15 @@
 extends Node2D
 
+signal key_noise_made
+
 var picked_up : bool = false
+var hum_delay_timer := Timer.new()
+
+func _ready():
+	Events.connect("use_item", self, "_on_use_item")
+	hum_delay_timer.connect("timeout", self, "_on_hum_delay_timer_timeout")
+	hum_delay_timer.set_one_shot(true)
+	add_child(hum_delay_timer)
 
 func _process(delta):
 	if not picked_up:
@@ -15,3 +24,11 @@ func _process(delta):
 					$Sprite.hide()
 	elif not $AudioStreamPlayer2D.is_playing():
 		queue_free()
+
+func _on_use_item(holding_item, key_ct, has_level_end_key):
+	if holding_item == "bell":
+		hum_delay_timer.start(1.0)
+
+func _on_hum_delay_timer_timeout():
+	emit_signal("key_noise_made", 0.8, position)
+	$Hum.play()

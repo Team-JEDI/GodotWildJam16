@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Gate_Open.ogg-2ba21480e8f2f4a94ac9170d73050fab.oggstr"
+
+[deps]
+
+source_file="res://assets/sounds/Gate_Open.ogg"
+dest_files=[ "res://.import/Gate_Open.ogg-2ba21480e8f2f4a94ac9170d73050fab.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

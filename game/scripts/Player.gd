@@ -105,7 +105,7 @@ func _physics_process(delta):
 				$BellSound.play()
 				can_ring_bell = false
 				bell_cooldown.start(BELL_COOLDOWN_TIME)
-				emit_signal("noise_made", 1.2, position)
+				emit_signal("noise_made", 0.8, position)
 				Events.emit_signal("use_item", holding_item, key_count, has_level_end_key)	
 			elif holding_item == "keys":
 				Events.emit_signal("use_item", holding_item, key_count, has_level_end_key)	

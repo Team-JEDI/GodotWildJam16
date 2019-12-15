@@ -9,6 +9,12 @@ enum states {
 	LOCKED
 }
 
+var sounds : Array = [
+	preload("res://assets/sounds/Gate_Unlock.ogg"),
+	preload("res://assets/sounds/Gate_Open.ogg"),
+	preload("res://assets/sounds/Gate_Close.ogg")
+]
+
 var forget_item_timer := Timer.new()
 var recently_used_item : String = ""
 var state 
@@ -64,10 +70,14 @@ func _process(delta):
 				if Input.is_action_just_pressed("interact"):
 					print("Interacting with %s" % name)
 					if state == states.OPEN:
+						$AudioStreamPlayer2D.set_stream(sounds[2])
+						$AudioStreamPlayer2D.play()
 						$AnimationPlayer.play("Close")
 						$UnlockedSprite.material = null
 						state = states.CLOSED
 					elif state == states.CLOSED and openable:
+						$AudioStreamPlayer2D.set_stream(sounds[1])
+						$AudioStreamPlayer2D.play()
 						$UnlockedSprite.show()
 						$AnimationPlayer.play("Open")
 						$UnlockedSprite.material = null
@@ -76,6 +86,8 @@ func _process(delta):
 						# make sound
 						pass
 				elif recently_used_item == "keys" and state == states.LOCKED:
+					$AudioStreamPlayer2D.set_stream(sounds[0])
+					$AudioStreamPlayer2D.play()
 					state = states.CLOSED
 					$UnlockedSprite.material = null
 					Events.emit_signal("item_destroy", "key")
