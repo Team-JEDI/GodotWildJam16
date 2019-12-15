@@ -3,24 +3,6 @@ class_name VOTriggerArea
 
 export var vo_line_num : int = 0
 
-onready var vo_lines = [
-	preload("res://assets/sounds/vo_line_01.ogg"),
-	preload("res://assets/sounds/vo_line_02.ogg"),
-	preload("res://assets/sounds/vo_line_03.ogg"),
-	preload("res://assets/sounds/vo_line_04.ogg"),
-	preload("res://assets/sounds/vo_line_05.ogg"),
-	preload("res://assets/sounds/vo_line_06.ogg"),
-	preload("res://assets/sounds/vo_line_07.ogg"),
-	preload("res://assets/sounds/vo_line_08.ogg"),
-	preload("res://assets/sounds/vo_line_09.ogg"),
-	preload("res://assets/sounds/vo_line_10.ogg"),
-	preload("res://assets/sounds/vo_line_11.ogg"),
-	preload("res://assets/sounds/vo_line_12.ogg"),
-	preload("res://assets/sounds/vo_line_13.ogg"),
-	preload("res://assets/sounds/vo_line_14.ogg"),
-	preload("res://assets/sounds/vo_line_15.ogg"),
-	preload("res://assets/sounds/vo_line_16.ogg")
-]
 onready var audio_player := $AudioStreamPlayer
 
 func _ready():
@@ -28,38 +10,54 @@ func _ready():
 
 func _on_body_entered(body):
 	
+	print("Player entered VO area %d" % vo_line_num)
+	
 	if body is Player:
 		match vo_line_num:
 			1:
 				play_line(0)
+				yield(audio_player, "finished")
+				yield(get_tree().create_timer(0.6), "timeout")
 				play_line(1)
+				yield(audio_player, "finished")
 				queue_free()
 			2:
 				play_line(3)
-				yield(get_tree().create_timer(0.3), "timeout")
+				yield(audio_player, "finished")
+				yield(get_tree().create_timer(1.0), "timeout")
 				play_line(4)
-				yield(get_tree().create_timer(0.4), "timeout")
+				yield(audio_player, "finished")
+				yield(get_tree().create_timer(2.5), "timeout")
 				play_line(5)
+				yield(audio_player, "finished")
 				queue_free()
 			3:
 				play_line(6)
+				yield(audio_player, "finished")
 				play_line(7)
+				yield(audio_player, "finished")
 				queue_free()
 			4:
 				play_line(8)
+				yield(audio_player, "finished")
 				play_line(9)
+				yield(audio_player, "finished")
 				queue_free()
 			5:
 				if body.has_level_end_key:
 					play_line(10)
+					yield(audio_player, "finished")
 					queue_free()
 			6:
 				play_line(11)
+				yield(audio_player, "finished")
 				# TODO: Player steps back
 				play_line(12)
+				yield(audio_player, "finished")
 				queue_free()
 
 func play_line(line_num : int):
-	audio_player.stream = vo_lines[line_num]
+	var line_file = "res://assets/sounds/vo_line_%02d.ogg" % (line_num+1)
+	var line = load(line_file)
+	audio_player.stream = line
 	audio_player.play()
-	yield(audio_player, "finished")
