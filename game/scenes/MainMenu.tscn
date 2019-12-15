@@ -1,7 +1,15 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://assets/sounds/Amor_Fati.ogg" type="AudioStream" id=2]
+[ext_resource path="res://assets/videos/title.ogv" type="VideoStream" id=3]
+[ext_resource path="res://assets/textures/logo.png" type="Texture" id=4]
+[ext_resource path="res://assets/fonts/menu.tres" type="DynamicFont" id=5]
+[ext_resource path="res://assets/sounds/Ambience.ogg" type="AudioStream" id=6]
+[ext_resource path="res://assets/textures/credits.png" type="Texture" id=7]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+blend_mode = 1
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -11,53 +19,137 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TitleTexture" type="TextureRect" parent="."]
+[node name="VideoPlayer" type="VideoPlayer" parent="."]
 anchor_right = 1.0
-margin_top = 120.0
-margin_right = 0.00012207
-margin_bottom = 340.0
+anchor_bottom = 1.0
+stream = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchor_left = 0.3
-anchor_top = 0.4
-anchor_right = 0.7
+[node name="Credits" type="Control" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="TextureRect_Credits" type="TextureRect" parent="Credits"]
+anchor_right = 1.0
 anchor_bottom = 1.0
-custom_constants/separation = 36
+texture = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackBtn" type="Button" parent="Credits"]
+margin_left = 760.0
+margin_top = 1019.0
+margin_right = 1160.0
+margin_bottom = 1053.0
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color_hover = Color( 0.588235, 0.72549, 0.811765, 1 )
+text = "BACK"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menu" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect_Logo" type="TextureRect" parent="Menu"]
+material = SubResource( 1 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 140.0
+margin_top = 310.0
+margin_right = 1740.0
+margin_bottom = 730.0
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 740.0
+margin_top = 563.0
+margin_right = 1140.0
+margin_bottom = 999.0
+custom_constants/separation = 18
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NewBtn" type="Button" parent="VBoxContainer"]
-margin_top = 230.0
-margin_right = 768.0
-margin_bottom = 250.0
+[node name="NewBtn" type="Button" parent="Menu/VBoxContainer"]
+margin_top = 123.0
+margin_right = 400.0
+margin_bottom = 157.0
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color_hover = Color( 0.588235, 0.72549, 0.811765, 1 )
 text = "NEW GAME"
+flat = true
 
-[node name="LoadBtn" type="Button" parent="VBoxContainer"]
-margin_top = 286.0
-margin_right = 768.0
-margin_bottom = 306.0
+[node name="LoadBtn" type="Button" parent="Menu/VBoxContainer"]
+margin_top = 175.0
+margin_right = 400.0
+margin_bottom = 209.0
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color_hover = Color( 0.588235, 0.72549, 0.811765, 1 )
 text = "LOAD GAME"
+flat = true
 
-[node name="CredsBtn" type="Button" parent="VBoxContainer"]
-margin_top = 342.0
-margin_right = 768.0
-margin_bottom = 362.0
+[node name="CredsBtn" type="Button" parent="Menu/VBoxContainer"]
+margin_top = 227.0
+margin_right = 400.0
+margin_bottom = 261.0
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color_hover = Color( 0.588235, 0.72549, 0.811765, 1 )
 text = "CREDITS"
+flat = true
 
-[node name="QuitBtn" type="Button" parent="VBoxContainer"]
-margin_top = 398.0
-margin_right = 768.0
-margin_bottom = 418.0
-text = "QUIT GAME"
+[node name="QuitBtn" type="Button" parent="Menu/VBoxContainer"]
+margin_top = 279.0
+margin_right = 400.0
+margin_bottom = 313.0
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color_hover = Color( 0.588235, 0.72549, 0.811765, 1 )
+text = "QUIT"
+flat = true
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer_Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
-[connection signal="button_up" from="VBoxContainer/NewBtn" to="." method="_on_new_game"]
-[connection signal="button_up" from="VBoxContainer/LoadBtn" to="." method="_on_load_game"]
-[connection signal="button_up" from="VBoxContainer/CredsBtn" to="." method="_on_view_credits"]
-[connection signal="button_up" from="VBoxContainer/QuitBtn" to="." method="_on_quit_game"]
+volume_db = -10.0
+bus = "Music0"
+
+[node name="AudioStreamPlayer_Ambience" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -10.0
+bus = "Ambience"
+
+[node name="Blackout" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="."]
+[connection signal="finished" from="VideoPlayer" to="." method="_on_VideoPlayer_finished"]
+[connection signal="pressed" from="Credits/BackBtn" to="." method="_on_BackBtn_pressed"]
+[connection signal="button_up" from="Menu/VBoxContainer/NewBtn" to="." method="_on_new_game"]
+[connection signal="button_up" from="Menu/VBoxContainer/LoadBtn" to="." method="_on_load_game"]
+[connection signal="button_up" from="Menu/VBoxContainer/CredsBtn" to="." method="_on_view_credits"]
+[connection signal="button_up" from="Menu/VBoxContainer/QuitBtn" to="." method="_on_quit_game"]
