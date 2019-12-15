@@ -69,6 +69,8 @@ position = Vector2( 906, 477 )
 
 [node name="Interactables" type="Node2D" parent="."]
 
+[node name="VOTriggers" type="Node2D" parent="."]
+
 [node name="BGM" type="AudioStreamPlayer" parent="."]
 
 [node name="Ambiance" type="AudioStreamPlayer" parent="."]
