@@ -34,7 +34,11 @@ _ID = 1
 position = Vector2( 3452, 2119 )
 _ID = 2
 
+[node name="EnemyPatrols" parent="EnemyHandler" index="1"]
+editor/display_folded = true
+
 [node name="Patrol0" type="Node2D" parent="EnemyHandler/EnemyPatrols" index="0"]
+editor/display_folded = true
 
 [node name="GraphNode" parent="EnemyHandler/EnemyPatrols/Patrol0" index="0" instance=ExtResource( 3 )]
 position = Vector2( 2005, 1290 )
@@ -43,6 +47,7 @@ position = Vector2( 2005, 1290 )
 position = Vector2( 2018, 2403 )
 
 [node name="Patrol1" type="Node2D" parent="EnemyHandler/EnemyPatrols" index="1"]
+editor/display_folded = true
 
 [node name="GraphNode" parent="EnemyHandler/EnemyPatrols/Patrol1" index="0" instance=ExtResource( 3 )]
 position = Vector2( 3165, 1323 )
@@ -51,6 +56,7 @@ position = Vector2( 3165, 1323 )
 position = Vector2( 3151, 2384 )
 
 [node name="Patrol2" type="Node2D" parent="EnemyHandler/EnemyPatrols" index="2"]
+editor/display_folded = true
 
 [node name="GraphNode" parent="EnemyHandler/EnemyPatrols/Patrol2" index="0" instance=ExtResource( 3 )]
 position = Vector2( 3460, 2174 )

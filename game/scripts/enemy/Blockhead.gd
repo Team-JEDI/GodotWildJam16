@@ -174,12 +174,14 @@ func _on_noise_made(echo_scale, location):
 	and state != STATES.FEAST \
 	and state != STATES.STUN \
 	and position.distance_to(player.position) <= LIGHT_FADE_SZ * echo_scale * 0.48:
+		print("kill")
 		state = STATES.CHASE
 		just_changed_state = true
 
 func _chase(delta):
 	var move_vec = Vector2.ZERO
 	if just_changed_state:
+		print("me")
 		MusicAndAmbience.play_song("chase")
 		MusicAndAmbience.play_sting("scare")
 		sting_fadeout_timer.start(2.0)
