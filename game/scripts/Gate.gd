@@ -48,9 +48,10 @@ func _manage_sprites_and_collis():
 		$UnlockedSprite.hide()
 		$LockedSprite.show()	
 
-func _on_use_item(item_name):
-	recently_used_item = item_name
-	forget_item_timer.start(0.02)
+func _on_use_item(item_name, key_count, has_level_end_key):
+	if key_count > 0 and item_name == "keys":
+		recently_used_item = item_name
+		forget_item_timer.start(0.02)
 
 func _forget_item():
 	recently_used_item = ""

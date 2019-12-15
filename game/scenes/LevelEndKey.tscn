@@ -5,7 +5,7 @@
 [ext_resource path="res://assets/sounds/key_pickup.wav" type="AudioStream" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 55, 55 )
+extents = Vector2( 30, 39 )
 
 [node name="LevelEndKey" type="Node2D"]
 script = ExtResource( 1 )

@@ -39,7 +39,6 @@ func _manage_sprites_and_collis():
 		$LockedSprite.show()	
 
 func _on_use_item(item_name, key_count, has_level_end_key):
-	print(item_name + ", " + String(key_count) + ", " + String(has_level_end_key))
 	if item_name == "keys" and has_level_end_key:
 		recently_used_item = item_name
 		player_has_level_end_key = has_level_end_key

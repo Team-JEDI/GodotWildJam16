@@ -10,7 +10,7 @@ const CHASE_TIMEOUT_DIST : float = 300.0
 const CHASE_TIMEOUT_TIME : float = 8.0
 const TILE_SIZE : float = 96.0
 const IDLE_SOUND_TIME_FACTOR : float = 3.0
-const MIN_IDLE_SOUND_TIME : float = 7.0
+const MIN_IDLE_SOUND_TIME : float = 6.0
 
 enum STATES {
 	PATROL,
