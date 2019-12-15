@@ -16,6 +16,7 @@ var hours_remaining : int = 0
 
 signal noise_made
 signal hour_elapsed
+signal game_over
 
 func _ready():
 	
@@ -32,13 +33,14 @@ func _on_hour_end():
 	print("Hours left: %d" % hours_remaining)
 	
 	emit_signal("noise_made", BELL_ECHO_SIZE, BELL_ECHO_POS)
-	emit_signal("hour_elapsed", hours_remaining)
 	bell_player.play()
 	
 	if hours_remaining == 0:
-		# TODO: Game over screen
+		yield(get_tree().create_timer(0.5), "timeout")
 		global_timer.stop()
+		emit_signal("game_over")
 	else:
+		emit_signal("hour_elapsed", hours_remaining)
 		hours_remaining -= 1
 
 func start_new_game():

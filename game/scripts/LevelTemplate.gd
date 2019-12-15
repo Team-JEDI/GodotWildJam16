@@ -16,7 +16,7 @@ func _ready():
 	$Character.connect("game_over", self, "_on_game_over")
 	GameTimer.connect("noise_made", self, "_on_noise_made")
 	GameTimer.connect("hour_elapsed", self, "_on_hour_elapsed")
-	GameTimer.connect("game_lost", self, "_on_game_over")
+	GameTimer.connect("game_over", self, "_on_game_over")
 	for ckpt in $checkpoints.get_children():
 		ckpt.connect("game_saved", self, "_on_game_saved")
 	$EndZone.connect("body_entered", self, "_on_level_finished")
