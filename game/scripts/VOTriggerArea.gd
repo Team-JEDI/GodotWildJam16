@@ -13,14 +13,15 @@ func _on_body_entered(body):
 	if body is Player and not already_triggered:
 		
 		print("Player entered VO area %d" % vo_line_num)
-		already_triggered = true
 		
 		match vo_line_num:
 			1:
+				already_triggered = true
 				play_line(1)
 				yield(audio_player, "finished")
 				queue_free()
 			2:
+				already_triggered = true
 				play_line(2)
 				yield(audio_player, "finished")
 				yield(get_tree().create_timer(1.0), "timeout")
@@ -31,19 +32,23 @@ func _on_body_entered(body):
 				yield(audio_player, "finished")
 				queue_free()
 			3:
+				already_triggered = true
 				play_line(5)
 				yield(audio_player, "finished")
 				queue_free()
 			4:
+				already_triggered = true
 				play_line(6)
 				yield(audio_player, "finished")
 				queue_free()
 			5:
 				if body.has_level_end_key:
+					already_triggered = true
 					play_line(7)
 					yield(audio_player, "finished")
 					queue_free()
 			6:
+				already_triggered = true
 				play_line(8)
 				yield(audio_player, "finished")
 				# TODO: Player steps back
