@@ -4,6 +4,8 @@ class_name Player
 const PLAYER_SPEED := 100.0        # Movement speed in pixels per second
 const SPRINT_FACTOR := 3.5         # How much faster sprinting is than sneaking
 const TILE_SIZE := 96.0
+const BELL_COOLDOWN_TIME := 1.0
+const DRAIN_HEALTH_COOLDOWN_TIME := 1.0
 
 enum state {
 	WALKING,
@@ -34,7 +36,7 @@ onready var step_sound_player = $FootSteps
 var player_state = state.IDLE
 var player_facing = "Down"
 var last_facing = player_facing
-var player_health : int = 4
+var player_health : int = 5
 var step_frames : Array = [1, 5, 10, 14, 19, 23]
 var holding_item : String = "bell"
 var key_count : int = 0
@@ -42,6 +44,11 @@ var has_level_end_key : bool = false
 var last_step_frame : int = 0
 var mash_bell_ct : int = 0
 var you_mashed_well_son : bool = false
+var bell_cooldown := Timer.new()
+var can_ring_bell : bool = true
+var drain_health_timer := Timer.new()
+var can_drain_health : bool = false
+var prev_player_state = player_state
 
 signal noise_made
 signal game_over
@@ -49,6 +56,12 @@ signal game_over
 func _ready():
 	Events.connect("item_destroy", self, "_on_item_destroy")
 	Events.connect("item_pickup", self, "_on_item_pickup")
+	add_child(bell_cooldown)
+	bell_cooldown.set_one_shot(true)
+	bell_cooldown.connect("timeout", self, "_on_bell_cooldown_timeout")
+	add_child(drain_health_timer)
+	drain_health_timer.set_one_shot(true)
+	drain_health_timer.connect("timeout", self, "_on_drain_health_timer_timeout")
 	$Keys.hide()
 
 func _physics_process(delta):
@@ -73,7 +86,7 @@ func _physics_process(delta):
 			player_facing = "Right"
 			move_vec.x += 1
 
-		# Handle using items	
+		# Handle switching items	
 		if Input.is_action_just_pressed("switch_item"):	
 			if holding_item == "bell":
 				$Bell.hide()
@@ -85,8 +98,13 @@ func _physics_process(delta):
 				$Keys.hide()
 				holding_item = "bell"	
 				print("player is holding [bell]")
+
+		# Handle using items	
 		if Input.is_action_just_pressed("use_item"):	
-			if holding_item == "bell":
+			if holding_item == "bell" and can_ring_bell:
+				$BellSound.play()
+				can_ring_bell = false
+				bell_cooldown.start(BELL_COOLDOWN_TIME)
 				emit_signal("noise_made", 1.2, position)
 				Events.emit_signal("use_item", holding_item, key_count, has_level_end_key)	
 			elif holding_item == "keys":
@@ -130,18 +148,31 @@ func _physics_process(delta):
 					step_sound_player.play()
 				last_step_frame = $Sprite.frame	
 	else:
-		# init : change player sprite
 		holding_item = "bell"
-		if Input.is_action_just_pressed("use_item"):	
+		if prev_player_state != player_state:
+			# TODO: change player sprite
+			drain_health_timer.start(DRAIN_HEALTH_COOLDOWN_TIME)
+		elif can_drain_health:
+			can_drain_health = false
+			player_health -= 1
+			print("player health decreased to %d"%player_health)
+			drain_health_timer.start(DRAIN_HEALTH_COOLDOWN_TIME)
+		if Input.is_action_just_pressed("use_item") and can_ring_bell:	
+			$BellSound.play()
+			can_ring_bell = false
+			bell_cooldown.start(BELL_COOLDOWN_TIME)
 			emit_signal("noise_made", 1.2, position)
 			mash_bell_ct += 1
-			# play sound
-		if mash_bell_ct >= 10:
+		if mash_bell_ct >= 3:
+			can_drain_health = false
 			you_mashed_well_son = true
 			player_state = state.IDLE
 			mash_bell_ct = 0
-
+	prev_player_state = player_state		
 	z_index = round(position.y / TILE_SIZE)	
+	if player_health <= 0:
+		# TODO: restart level
+		pass
 
 func _on_item_destroy(item):
 	if item == "key":
@@ -156,3 +187,9 @@ func _on_item_pickup(item):
 	elif item == "level end key":
 		print("level end key get")
 		has_level_end_key = true	
+
+func _on_bell_cooldown_timeout():
+	can_ring_bell = true
+
+func _on_drain_health_timer_timeout():
+	can_drain_health = true
