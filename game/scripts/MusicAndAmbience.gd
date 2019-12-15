@@ -62,7 +62,6 @@ func _ready():
 	add_child(_players[1])
 	add_child(_players[2])
 	add_child(_players[3])
-	set_play_ambience(true)
 	
 func _process(delta):
 	var end_fade : bool
