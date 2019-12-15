@@ -18,16 +18,10 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://scripts/Player.gd"
-}, {
-"base": "Area2D",
-"class": "VOTriggerArea",
-"language": "GDScript",
-"path": "res://scripts/VOTriggerArea.gd"
 } ]
 _global_script_class_icons={
 "Creature": "",
-"Player": "",
-"VOTriggerArea": ""
+"Player": ""
 }
 
 [application]
