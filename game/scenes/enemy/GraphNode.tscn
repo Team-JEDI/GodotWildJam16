@@ -3,7 +3,6 @@
 [ext_resource path="res://scripts/enemy/GraphNode.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/enemy/node.png" type="Texture" id=2]
 
-
 [node name="GraphNode" type="Node2D"]
 script = ExtResource( 1 )
 

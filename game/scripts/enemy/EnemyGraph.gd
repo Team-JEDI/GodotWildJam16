@@ -61,7 +61,7 @@ func _make_nodes(floor_cells, wall_cells, wall_tilemap):
 					graph_pos_to_node[graph_pos] = node
 					pos_to_node[node.position] = node
 					$Nodes.add_child(node)
-					node.hide()
+					node.get_node("Sprite").hide()
 
 func _get_local_node_map(cell, cell_exists_at) -> Array:
 	var local_node_map := [

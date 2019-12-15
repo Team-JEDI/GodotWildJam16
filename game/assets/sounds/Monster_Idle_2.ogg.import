@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Monster_Idle_2.ogg-7d3bbdc830ae9b6b7d234e6cb2a34789.oggstr"
+
+[deps]
+
+source_file="res://assets/sounds/Monster_Idle_2.ogg"
+dest_files=[ "res://.import/Monster_Idle_2.ogg-7d3bbdc830ae9b6b7d234e6cb2a34789.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

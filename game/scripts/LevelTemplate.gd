@@ -20,6 +20,8 @@ func _ready():
 	for ckpt in $checkpoints.get_children():
 		ckpt.connect("game_saved", self, "_on_game_saved")
 	$EndZone.connect("body_entered", self, "_on_level_finished")
+	for enemy in $EnemyHandler/Enemies.get_children():
+		enemy.connect("enemy_noise_made", self, "_on_noise_made")
 	
 	GameTimer.start_new_game()
 	
@@ -29,6 +31,7 @@ func _ready():
 		_on_game_saved()
 	
 	_set_materials_for_lighting()
+	MusicAndAmbience.set_play_ambience(true)
 
 func _process(delta):
 	if Input.is_action_just_pressed("ui_cancel"):

@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+signal enemy_noise_made
+
 const WALK_SPEED : float = 80.0
 const RUN_SPEED : float = 270.0
 const GRAB_DIST : float = 60.0
@@ -7,12 +9,13 @@ const LIGHT_FADE_SZ : float = 1000.0
 const CHASE_TIMEOUT_DIST : float = 300.0
 const CHASE_TIMEOUT_TIME : float = 8.0
 const TILE_SIZE : float = 96.0
+const IDLE_SOUND_TIME_FACTOR : float = 3.0
+const MIN_IDLE_SOUND_TIME : float = 7.0
 
 enum STATES {
 	PATROL,
 	RETURN_TO_PATROL,
 	CHASE,
-	SEARCH,
 	FEAST,
 	STUN
 }
@@ -38,6 +41,19 @@ var sprite_dir_to_str : Dictionary = {
 	2 : "FaceLeft",
 	1 : "FaceDown"
 }
+var sting_fadeout_timer := Timer.new()
+var stun_timer := Timer.new()
+
+var idle_sounds : Array = [
+	preload("res://assets/sounds/Monster_Idle_1.ogg"),
+	preload("res://assets/sounds/Monster_Idle_2.ogg"),
+	preload("res://assets/sounds/Monster_Idle_3.ogg"),
+	preload("res://assets/sounds/Monster_Idle_4.ogg"),
+]
+var chase_sound_loop = preload("res://assets/sounds/Monster_Chase_LOOP.ogg")
+var devouring_sound_loop = preload("res://assets/sounds/Monster_Devouring_LOOP.ogg")
+
+var idle_sound_timer := Timer.new()
 
 func _ready():
 	Events.connect("return_path", self, "_store_path")
@@ -48,6 +64,15 @@ func _ready():
 	chase_end_timer.set_one_shot(true)
 	add_child(get_new_chase_path_timer)
 	get_new_chase_path_timer.set_one_shot(true)
+	sting_fadeout_timer.set_one_shot(true)
+	add_child(sting_fadeout_timer)
+	sting_fadeout_timer.connect("timeout", self, "_on_sting_fadeout_timer_timeout")
+	stun_timer.set_one_shot(true)
+	add_child(stun_timer)
+	stun_timer.connect("timeout", self, "_on_stun_timeout")
+	idle_sound_timer.set_one_shot(true)
+	idle_sound_timer.connect("timeout", self, "_on_idle_sound_timer_timeout")
+	add_child(idle_sound_timer)
 
 func _store_patrol(_id, _patrol_multipath):
 	if _id == _ID:
@@ -65,8 +90,6 @@ func _physics_process(delta):
 		move = _return_to_patrol(delta)	
 	elif state == STATES.CHASE:
 		move = _chase(delta)
-	elif state == STATES.SEARCH:
-		move = _search()
 	elif state == STATES.FEAST:
 		_feast()
 		move = Vector2.ZERO
@@ -77,9 +100,8 @@ func _physics_process(delta):
 		print("**Error** Monster state is " + String(state))	
 		print("This is a non-state.")
 	if player.position.distance_to(position) <= GRAB_DIST * 2 \
-	and state != STATES.CHASE \
-	and state != STATES.FEAST \
-	and state != STATES.STUN:
+	and (state == STATES.PATROL \
+		or state == STATES.RETURN_TO_PATROL):
 		state = STATES.CHASE	
 		just_changed_state = true
 	_control_sprite_animation()	
@@ -118,6 +140,7 @@ func _get_move_to_node(target_node, speed, delta, mode):
 func _patrol(delta):
 	var move_vec = Vector2.ZERO
 	if just_changed_state:
+		idle_sound_timer.start(randf() * IDLE_SOUND_TIME_FACTOR + MIN_IDLE_SOUND_TIME)
 		just_changed_state = false
 		print("Enemy %s " % name + "state changed to [patrol]")
 	if patrol_multipath.size() > 0:
@@ -132,7 +155,9 @@ func _patrol(delta):
 
 func _return_to_patrol(delta):
 	var move_vec = Vector2.ZERO
+	MusicAndAmbience.stop_music()
 	if just_changed_state:
+		idle_sound_timer.start(randf() * IDLE_SOUND_TIME_FACTOR + MIN_IDLE_SOUND_TIME)
 		just_changed_state = false
 		print("Enemy %s " % name + "state changed to [return to patrol]")
 		Events.emit_signal("get_path", _ID, position, patrol_multipath[cur_patrol_path][cur_patrol_node].position)
@@ -147,6 +172,7 @@ func _return_to_patrol(delta):
 func _on_noise_made(echo_scale, location):
 	if state != STATES.CHASE \
 	and state != STATES.FEAST \
+	and state != STATES.STUN \
 	and position.distance_to(player.position) <= LIGHT_FADE_SZ * echo_scale * 0.48:
 		state = STATES.CHASE
 		just_changed_state = true
@@ -154,8 +180,13 @@ func _on_noise_made(echo_scale, location):
 func _chase(delta):
 	var move_vec = Vector2.ZERO
 	if just_changed_state:
+		MusicAndAmbience.play_song("chase")
+		MusicAndAmbience.play_sting("scare")
+		sting_fadeout_timer.start(2.0)
 		just_changed_state = false
 		print("Enemy %s " % name + "state changed to [chase]")
+		$AudioStreamPlayer2D.set_stream(chase_sound_loop)
+		$AudioStreamPlayer2D.play()
 	var distance_to_player : float = position.distance_to(player.position)
 	if distance_to_player > RUN_SPEED * delta + GRAB_DIST:
 		if distance_to_player >= CHASE_TIMEOUT_DIST:
@@ -176,18 +207,47 @@ func _chase(delta):
 	return move_vec
 
 func _chase_end():
+	$AudioStreamPlayer2D.stop()
+	MusicAndAmbience.stop_music()
+	MusicAndAmbience.play_sting("unsettling")
+	sting_fadeout_timer.start(5.0)
 	state = STATES.RETURN_TO_PATROL
 	just_changed_state = true
 
-func _search():
-	# no time to do this
-	pass
-
 func _feast():
 	if just_changed_state:
+		$AudioStreamPlayer2D.set_stream(devouring_sound_loop)
+		$AudioStreamPlayer2D.play()
 		player.player_state = player.state.STUN
 		print("Enemy %s " % name + "state changed to [feast]")
 		just_changed_state = false
+	elif player.you_mashed_well_son == true:
+		$AudioStreamPlayer2D.stop()
+		print("you mashed well, son")
+		player.you_mashed_well_son = false
+		state = STATES.STUN	
+		just_changed_state = true
 
 func _stun():
-	pass
+	if just_changed_state:
+		print("Enemy %s " % name + "state changed to [stun]")
+		MusicAndAmbience.play_song("post chase")
+		stun_timer.start(5.0)
+		just_changed_state = false
+
+func _on_sting_fadeout_timer_timeout():
+	MusicAndAmbience.fade_out_current_sting()
+
+func _on_stun_timeout():
+	MusicAndAmbience.play_sting("unsettling")
+	sting_fadeout_timer.start(3.0)
+	state = STATES.RETURN_TO_PATROL
+	just_changed_state = true
+
+func _on_idle_sound_timer_timeout():
+	if state == STATES.PATROL or state == STATES.RETURN_TO_PATROL:
+		print("enemy making sound")
+		emit_signal("enemy_noise_made", 0.7, position)
+		$AudioStreamPlayer2D.set_stream(idle_sounds[randi()%4])
+		$AudioStreamPlayer2D.play()
+		idle_sound_timer.start(randf() * IDLE_SOUND_TIME_FACTOR + MIN_IDLE_SOUND_TIME)

@@ -1,6 +1,6 @@
 extends Node
 
-const FADE_DB_PER_STEP : float = 0.5
+const FADE_DB_PER_STEP : float = 0.7
 const FADE_DB_MAX : float = -6.0
 const FADE_DB_MIN : float = -72.0
 
@@ -43,7 +43,7 @@ var bus_name_to_bus_index : Dictionary = {
 var song_queue : Array = []
 var sting_queue : Array = []
 var current_music_player_i : int = 0
-var fading : Array = ["", "", ""]
+var fading : Array = ["", "", "", ""]
 
 var song_names : Array = [
 	"somber", "chase", "post chase", "ending"
@@ -65,7 +65,7 @@ func _ready():
 	
 func _process(delta):
 	var end_fade : bool
-	for i in range(3):
+	for i in range(4):
 		end_fade = true
 		if fading[i] == "in":
 			end_fade = _fade_in(_players[i], false)
@@ -91,6 +91,8 @@ func _process(delta):
 			current_music_player_i = other_player_i
 			_players[current_music_player_i].play()
 	if sting_queue.size() > 0 and not _players[3].is_playing():
+		var bus_index = bus_name_to_bus_index[_players[3].bus]
+		AudioServer.set_bus_volume_db(bus_index, 0.0)
 		var sting_stream = sting_name_to_sting_stream[sting_queue[0]]
 		_players[3].set_stream(sting_stream)
 		_players[3].play()
@@ -150,3 +152,6 @@ func set_play_ambience(setting : bool):
 	else:	
 		fading[2] = "out"
 		_fade_out(_players[2], true)
+
+func fade_out_current_sting():
+	fading[3] = "out"

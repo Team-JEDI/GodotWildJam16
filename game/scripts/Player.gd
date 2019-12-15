@@ -40,6 +40,8 @@ var holding_item : String = "bell"
 var key_count : int = 0
 var has_level_end_key : bool = false
 var last_step_frame : int = 0
+var mash_bell_ct : int = 0
+var you_mashed_well_son : bool = false
 
 signal noise_made
 signal game_over
@@ -128,11 +130,17 @@ func _physics_process(delta):
 					step_sound_player.play()
 				last_step_frame = $Sprite.frame	
 	else:
-		# probably going to hide both creature and player sprites and show creature holding player sprite 
-		# player devouring sounds
-		# handle bell mash to get away from creature
-		pass
-	
+		# init : change player sprite
+		holding_item = "bell"
+		if Input.is_action_just_pressed("use_item"):	
+			emit_signal("noise_made", 1.2, position)
+			mash_bell_ct += 1
+			# play sound
+		if mash_bell_ct >= 10:
+			you_mashed_well_son = true
+			player_state = state.IDLE
+			mash_bell_ct = 0
+
 	z_index = round(position.y / TILE_SIZE)	
 
 func _on_item_destroy(item):
