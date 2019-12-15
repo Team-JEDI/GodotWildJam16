@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Player_Bell.ogg-359bd748acaca2d696f05bf04bada8ad.ogg
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
