@@ -5,7 +5,7 @@ const TILE_SIZE := 96.0
 enum states {
 	FOLLOW,
 	IDLE,
-	DONE
+	STILL
 }
 
 var state = states.FOLLOW
@@ -30,6 +30,8 @@ signal noise_made
 
 func _ready():
 	$FootSteps.bus = "SFX"
+	Events.connect("old_man_wait", self, "_on_old_man_wait")
+	Events.connect("old_man_follow", self, "_on_old_man_follow")
 
 func _physics_process(delta):
 	# Handle movement direction
@@ -68,3 +70,10 @@ func _control_sprite_animation():
 		else:	
 			$AnimationPlayer.play(sprite_dir_to_str_idle[sprite_dir])
 
+func _on_old_man_wait():
+	state = states.STILL
+	$AnimationPlayer.stop()
+	$Sprite.frame = 26
+
+func _on_old_man_follow():
+	state = states.IDLE

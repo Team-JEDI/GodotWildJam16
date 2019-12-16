@@ -86,9 +86,12 @@ func _store_path(_id, _path):
 		cur_path = _path
 
 func _physics_process(delta):
-	if player.position.y < 2915:
+	if player.position.y < 2915 and state == STATES.WAIT:
 		state = STATES.RETURN_TO_PATROL
+		just_changed_state = true
 	if state != STATES.WAIT:
+		if just_changed_state:
+			_on_idle_sound_timer_timeout()
 		if state == STATES.PATROL:
 			move = _patrol(delta)
 		elif state == STATES.RETURN_TO_PATROL:
