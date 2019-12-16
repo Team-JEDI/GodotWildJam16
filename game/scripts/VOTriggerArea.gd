@@ -39,6 +39,7 @@ func _on_body_entered(body):
 				play_line(5)
 				yield(audio_player, "finished")
 				emit_signal("instruction_triggered", 2)
+				Events.emit_signal("old_man_wait")
 				queue_free()
 			4:
 				already_triggered = true
@@ -48,6 +49,7 @@ func _on_body_entered(body):
 				queue_free()
 			5:
 				if body.has_level_end_key:
+					Events.emit_signal("old_man_follow")
 					already_triggered = true
 					play_line(7)
 					yield(audio_player, "finished")
