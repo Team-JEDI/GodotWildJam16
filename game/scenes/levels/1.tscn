@@ -34,6 +34,7 @@ scale = Vector2( 7, 3 )
 shape = SubResource( 1 )
 
 [node name="Blockhead" parent="EnemyHandler/Enemies" index="0" instance=ExtResource( 7 )]
+position = Vector2( 841, 2648 )
 
 [node name="Patrol0" type="Node2D" parent="EnemyHandler/EnemyPatrols" index="0"]
 
