@@ -113,13 +113,12 @@ tracks/0/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 14, 20 )
+extents = Vector2( 19, 20 )
 
 [node name="Blockhead" type="KinematicBody2D"]
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-visible = false
 position = Vector2( 0, -39 )
 texture = ExtResource( 2 )
 flip_h = true
@@ -141,5 +140,6 @@ position = Vector2( 0, -9 )
 shape = SubResource( 5 )
 
 [node name="Feast" type="Sprite" parent="."]
+visible = false
 texture = ExtResource( 3 )
 hframes = 6

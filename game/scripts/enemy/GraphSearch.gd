@@ -1,7 +1,7 @@
 extends Node
 
 const EDGE_CT : int = 8
-const MAX_DEPTH : int = 400
+const MAX_DEPTH : int = 800
 
 var path_ledger : Dictionary
 var priority_queue : Array
