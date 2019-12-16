@@ -33,7 +33,7 @@ func _on_load_game():
 
 func _on_new_game():
 	LoadHelper.is_loading = false
-	get_tree().change_scene("res://scenes/levels/1.tscn")
+	get_tree().change_scene("res://scenes/IntroCutScene.tscn")
 
 func _on_view_credits():
 	menu.hide()
