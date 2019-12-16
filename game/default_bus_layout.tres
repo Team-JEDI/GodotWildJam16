@@ -2,6 +2,11 @@
 
 [sub_resource type="AudioEffectReverb" id=1]
 resource_name = "Reverb"
+predelay_msec = 300.0
+predelay_feedback = 0.2
+room_size = 0.3
+hipass = 0.2
+wet = 0.35
 
 [resource]
 bus/1/name = "Ambience"

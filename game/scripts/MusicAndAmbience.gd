@@ -1,7 +1,7 @@
 extends Node
 
 const FADE_DB_PER_STEP : float = 0.7
-const FADE_DB_MAX : float = -6.0
+const FADE_DB_MAX : float = -3.0
 const FADE_DB_MIN : float = -72.0
 
 var ambience_stream = load("res://assets/sounds/Ambience.ogg")
