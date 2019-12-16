@@ -149,21 +149,34 @@ func _physics_process(delta):
 				last_step_frame = $Sprite.frame	
 	else:
 		holding_item = "bell"
+		if not $AnimationPlayer.is_playing():
+			$AnimationPlayer.play("Feast_Idle")
 		if prev_player_state != player_state:
 			# TODO: change player sprite
+			$AnimationPlayer.play("Feast_Idle")
 			drain_health_timer.start(DRAIN_HEALTH_COOLDOWN_TIME)
+			$Sprite.hide()
+			$Keys.hide()
+			$Bell.hide()
+			$Feast.show()
 		elif can_drain_health:
 			can_drain_health = false
 			player_health -= 1
 			print("player health decreased to %d"%player_health)
 			drain_health_timer.start(DRAIN_HEALTH_COOLDOWN_TIME)
 		if Input.is_action_just_pressed("use_item") and can_ring_bell:	
+			$AnimationPlayer.play("Feast_Bell")
 			$BellSound.play()
 			can_ring_bell = false
 			bell_cooldown.start(BELL_COOLDOWN_TIME)
 			emit_signal("noise_made", 1.2, position)
 			mash_bell_ct += 1
 		if mash_bell_ct >= 3:
+			player_state = state.IDLE
+			$Sprite.show()
+			$Keys.show()
+			$Bell.show()
+			$Feast.hide()
 			can_drain_health = false
 			you_mashed_well_son = true
 			player_state = state.IDLE

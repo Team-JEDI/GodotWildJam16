@@ -45,29 +45,28 @@ func _make_nodes(floor_cells, wall_cells, wall_tilemap):
 	for cell in floor_cells:
 		if not cell in scaled_wall_cells:
 			cell_exists_at[cell] = 1
-	var base_offset := Vector2(16, 16)
+	var base_offset := Vector2(24, 24)
 	var local_node_map : Array
 	for cell in cell_exists_at.keys():
 		var pos_offset : Vector2 = 96 * cell + base_offset
-		var graph_pos_offset : Vector2 = 3 * cell
+		var graph_pos_offset : Vector2 = 2 * cell
 		local_node_map = _get_local_node_map(cell, cell_exists_at)
-		for i in range(3):
-			for j in range(3):
+		for i in range(2):
+			for j in range(2):
 				if local_node_map[i][j]:
 					var node = node_class.instance()
 					var graph_pos := graph_pos_offset + Vector2(i, j)
-					node.position = pos_offset + Vector2(i * 32, j * 32)
+					node.position = pos_offset + Vector2(i * 48, j * 48)
 					node.graph_pos = graph_pos
 					graph_pos_to_node[graph_pos] = node
 					pos_to_node[node.position] = node
 					$Nodes.add_child(node)
-					node.get_node("Sprite").hide()
+					node.hide()
 
 func _get_local_node_map(cell, cell_exists_at) -> Array:
 	var local_node_map := [
-		[true, true, true],
-		[true, true, true],
-		[true, true, true]
+		[true, true],
+		[true, true],
 	]
 	var neighbor_cell_exists : bool
 	"""

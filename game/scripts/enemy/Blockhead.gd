@@ -96,12 +96,10 @@ func _physics_process(delta):
 	elif state == STATES.STUN:
 		_stun()
 		move = Vector2.ZERO
-	else:
-		print("**Error** Monster state is " + String(state))	
-		print("This is a non-state.")
 	if player.position.distance_to(position) <= GRAB_DIST * 2 \
 	and (state == STATES.PATROL \
-		or state == STATES.RETURN_TO_PATROL):
+		or state == STATES.RETURN_TO_PATROL) \
+	and not player.player_state == player.state.STUN:
 		state = STATES.CHASE	
 		just_changed_state = true
 	_control_sprite_animation()	
@@ -173,13 +171,17 @@ func _on_noise_made(echo_scale, location):
 	if state != STATES.CHASE \
 	and state != STATES.FEAST \
 	and state != STATES.STUN \
+	and location == player.position \
+	and not player.player_state == player.state.STUN \
 	and position.distance_to(player.position) <= LIGHT_FADE_SZ * echo_scale * 0.48:
+		print("kill")
 		state = STATES.CHASE
 		just_changed_state = true
 
 func _chase(delta):
 	var move_vec = Vector2.ZERO
 	if just_changed_state:
+		print("me")
 		MusicAndAmbience.play_song("chase")
 		MusicAndAmbience.play_sting("scare")
 		sting_fadeout_timer.start(2.0)
@@ -201,9 +203,13 @@ func _chase(delta):
 		if cur_path.size() > cur_node:
 			var target_node = cur_path[cur_node]	
 			move_vec = _get_move_to_node(target_node, RUN_SPEED, delta, "chase")
-	else:		
-		state = STATES.FEAST
-		just_changed_state = true
+	else:
+		if player.player_state != player.state.STUN:
+			state = STATES.FEAST
+			just_changed_state = true
+		else:
+			state = STATES.RETURN_TO_PATROL
+			just_changed_state = true	
 	return move_vec
 
 func _chase_end():
@@ -216,12 +222,18 @@ func _chase_end():
 
 func _feast():
 	if just_changed_state:
+		position = player.position
+		$AnimationPlayer.play("Feast")
+		$Sprite.hide()
+		$Feast.show()
 		$AudioStreamPlayer2D.set_stream(devouring_sound_loop)
 		$AudioStreamPlayer2D.play()
 		player.player_state = player.state.STUN
 		print("Enemy %s " % name + "state changed to [feast]")
 		just_changed_state = false
 	elif player.you_mashed_well_son == true:
+		$Sprite.show()
+		$Feast.hide()
 		$AudioStreamPlayer2D.stop()
 		print("you mashed well, son")
 		player.you_mashed_well_son = false

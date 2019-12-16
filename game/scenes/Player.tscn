@@ -1,13 +1,47 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/player_sprites.png" type="Texture" id=2]
 [ext_resource path="res://assets/textures/Keys.png" type="Texture" id=3]
 [ext_resource path="res://assets/textures/HandBell.png" type="Texture" id=4]
 [ext_resource path="res://assets/sounds/Player_Bell.ogg" type="AudioStream" id=5]
+[ext_resource path="res://assets/textures/Player_LifeforceStealingSprite.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 23.0467, 23.7878 )
+
+[sub_resource type="Animation" id=10]
+resource_name = "Feast_Bell"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("Feast:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 8, 9, 10, 11, 12, 13, 14, 15 ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "Feast_Idle"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Feast:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "IdleDown"
@@ -394,6 +428,8 @@ current = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "IdleDown"
+anims/Feast_Bell = SubResource( 10 )
+anims/Feast_Idle = SubResource( 11 )
 anims/IdleDown = SubResource( 2 )
 anims/IdleLeft = SubResource( 3 )
 anims/IdleRight = SubResource( 4 )
@@ -408,18 +444,25 @@ position = Vector2( 0, -32 )
 texture = ExtResource( 2 )
 vframes = 3
 hframes = 9
-frame = 18
+frame = 17
 
 [node name="FootSteps" type="AudioStreamPlayer2D" parent="."]
 
 [node name="Keys" type="Sprite" parent="."]
-position = Vector2( 16.6705, 6.54057 )
+position = Vector2( -18.2358, 7.832 )
 texture = ExtResource( 3 )
 
 [node name="Bell" type="Sprite" parent="."]
-position = Vector2( 16.138, 5.03125 )
+position = Vector2( -18.7649, 4.853 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 4 )
 
 [node name="BellSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 5 )
+
+[node name="Feast" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 8
+frame = 8

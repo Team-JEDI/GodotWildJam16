@@ -5,7 +5,7 @@
 [ext_resource path="res://assets/textures/LockedGate.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 45, 13 )
+extents = Vector2( 49, 16 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "Close"
