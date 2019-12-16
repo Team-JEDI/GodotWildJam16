@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/enemy/Blockhead.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/enemy/monster_sheet.png" type="Texture" id=2]
+[ext_resource path="res://assets/textures/MonsterLifeforceSteal.png" type="Texture" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "FaceDown"
@@ -80,6 +81,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=4]
 length = 0.7
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -93,16 +95,36 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6 ]
 }
 
+[sub_resource type="Animation" id=6]
+resource_name = "Feast"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Feast:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 14, 20 )
+
 [node name="Blockhead" type="KinematicBody2D"]
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+visible = false
 position = Vector2( 0, -39 )
 texture = ExtResource( 2 )
 flip_h = true
 vframes = 3
 hframes = 7
-frame = 9
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "FaceDown"
@@ -110,5 +132,14 @@ anims/FaceDown = SubResource( 1 )
 anims/FaceLeft = SubResource( 2 )
 anims/FaceRight = SubResource( 3 )
 anims/FaceUp = SubResource( 4 )
+anims/Feast = SubResource( 6 )
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -9 )
+shape = SubResource( 5 )
+
+[node name="Feast" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+hframes = 6

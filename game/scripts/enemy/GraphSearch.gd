@@ -1,6 +1,7 @@
 extends Node
 
 const EDGE_CT : int = 8
+const MAX_DEPTH : int = 400
 
 var path_ledger : Dictionary
 var priority_queue : Array
@@ -17,13 +18,13 @@ func get_new_path(from_node, to_node, _max_movement) -> Array:
 		0.0,
 		to_node.position.distance_to(from_node.position)
 	]
-	var success : bool = _generate_shortest_path(from_node, to_node)
+	var success : bool = _generate_shortest_path(from_node, to_node, 0)
 	if not success:
 		print("no success")
 		return []
 	return _assemble_generated_path(to_node)	
 
-func _generate_shortest_path(from_node, to_node) -> bool:
+func _generate_shortest_path(from_node, to_node, depth) -> bool:
 	for i in range(EDGE_CT):
 		var found_end : bool = _search_one_step(from_node, to_node, i)
 		if found_end:
@@ -32,7 +33,10 @@ func _generate_shortest_path(from_node, to_node) -> bool:
 	if priority_queue.size() == 0:
 		return false
 	priority_queue.sort_custom(self, "_first_distance_lesser")
-	return _generate_shortest_path(priority_queue[0], to_node)	
+	if depth < MAX_DEPTH:
+		return _generate_shortest_path(priority_queue[0], to_node, depth + 1)	
+	else:	
+		return false
 
 func _search_one_step(from_node, to_node, edge_i) -> bool:
 	var step_node = from_node.edges[edge_i]
