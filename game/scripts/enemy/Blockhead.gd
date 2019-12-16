@@ -73,6 +73,7 @@ func _ready():
 	idle_sound_timer.set_one_shot(true)
 	idle_sound_timer.connect("timeout", self, "_on_idle_sound_timer_timeout")
 	add_child(idle_sound_timer)
+	$AudioStreamPlayer2D.bus = "SFX"
 
 func _store_patrol(_id, _patrol_multipath):
 	if _id == _ID:

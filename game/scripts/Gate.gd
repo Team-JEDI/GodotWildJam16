@@ -36,6 +36,7 @@ func _ready():
 	forget_item_timer.connect("timeout", self, "_forget_item")
 	forget_item_timer.set_one_shot(true)
 	add_child(forget_item_timer)
+	$AudioStreamPlayer2D.bus = "SFX"
 
 func _manage_sprites_and_collis():
 	if state == states.OPEN:

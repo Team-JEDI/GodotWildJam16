@@ -10,6 +10,8 @@ func _ready():
 	hum_delay_timer.connect("timeout", self, "_on_hum_delay_timer_timeout")
 	hum_delay_timer.set_one_shot(true)
 	add_child(hum_delay_timer)
+	$AudioStreamPlayer2D.bus = "SFX"
+	$Hum.bus = "SFX"
 
 func _process(delta):
 	if not picked_up:

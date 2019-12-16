@@ -4,7 +4,7 @@ class_name Player
 const PLAYER_SPEED := 100.0        # Movement speed in pixels per second
 const SPRINT_FACTOR := 3.5         # How much faster sprinting is than sneaking
 const TILE_SIZE := 96.0
-const BELL_COOLDOWN_TIME := 1.0
+const BELL_COOLDOWN_TIME := 0.75
 const DRAIN_HEALTH_COOLDOWN_TIME := 1.0
 
 enum state {
@@ -63,6 +63,8 @@ func _ready():
 	drain_health_timer.set_one_shot(true)
 	drain_health_timer.connect("timeout", self, "_on_drain_health_timer_timeout")
 	$Keys.hide()
+	$FootSteps.bus = "SFX"
+	$BellSound.bus = "SFX"
 
 func _physics_process(delta):
 	
