@@ -105,8 +105,11 @@ func _on_instruction_text(instruction_num):
 
 func _on_level_finished(body):
 	if body is Player:
-		_on_game_saved()
-		get_tree().change_scene("res://scenes/levels/%d.tscn" % (level_num + 1))
+		match level_num:
+			1:
+				get_tree().change_scene("res://scenes/levels/2.tscn")
+			2:
+				get_tree().change_scene("res://scenes/EndCutScene.tscn")
 
 func _on_game_over():
 	go_popup.popup_centered()
