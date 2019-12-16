@@ -26,8 +26,9 @@ func _ready():
 	for interactable in $Interactables.get_children():
 		if "Key" in interactable.name:
 			interactable.connect("key_noise_made", self, "_on_noise_made")
-	for trigger in $VOTriggers.get_children():
-		trigger.connect("instruction_triggered", self, "_on_instruction_text")
+	if has_node("VOTriggers"):
+		for trigger in $VOTriggers.get_children():
+			trigger.connect("instruction_triggered", self, "_on_instruction_text")
 	
 	GameTimer.start_new_game()
 	
