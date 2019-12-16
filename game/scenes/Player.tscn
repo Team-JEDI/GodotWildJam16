@@ -8,7 +8,7 @@
 [ext_resource path="res://assets/textures/Player_LifeforceStealingSprite.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 23.0467, 23.7878 )
+extents = Vector2( 22.1985, 16.8764 )
 
 [sub_resource type="Animation" id=10]
 resource_name = "Feast_Bell"
@@ -420,7 +420,7 @@ collision_layer = 3
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 6 )
+position = Vector2( 0.214642, 10.2928 )
 shape = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]

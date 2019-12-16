@@ -15,20 +15,20 @@ enum state {
 }
 
 onready var walk_sounds = [
-	preload("res://assets/sounds/player_walk_1.wav"), 
-	preload("res://assets/sounds/player_walk_2.wav"),
-	preload("res://assets/sounds/player_walk_3.wav"),
-	preload("res://assets/sounds/player_walk_4.wav"),
-	preload("res://assets/sounds/player_walk_5.wav"),
-	preload("res://assets/sounds/player_walk_6.wav")
+	preload("res://assets/sounds/player_walk_1.ogg"), 
+	preload("res://assets/sounds/player_walk_2.ogg"),
+	preload("res://assets/sounds/player_walk_3.ogg"),
+	preload("res://assets/sounds/player_walk_4.ogg"),
+	preload("res://assets/sounds/player_walk_5.ogg"),
+	preload("res://assets/sounds/player_walk_6.ogg")
 ]
 onready var run_sounds = [
-	preload("res://assets/sounds/player_run_1.wav"),
-	preload("res://assets/sounds/player_run_2.wav"),
-	preload("res://assets/sounds/player_run_3.wav"),
-	preload("res://assets/sounds/player_run_4.wav"),
-	preload("res://assets/sounds/player_run_5.wav"),
-	preload("res://assets/sounds/player_run_6.wav")
+	preload("res://assets/sounds/player_run_1.ogg"),
+	preload("res://assets/sounds/player_run_2.ogg"),
+	preload("res://assets/sounds/player_run_3.ogg"),
+	preload("res://assets/sounds/player_run_4.ogg"),
+	preload("res://assets/sounds/player_run_5.ogg"),
+	preload("res://assets/sounds/player_run_6.ogg")
 ]
 
 onready var step_sound_player = $FootSteps
