@@ -5,6 +5,8 @@ var already_triggered : bool = false
 
 onready var audio_player := $AudioStreamPlayer
 
+signal instruction_triggered
+
 func _ready():
 	connect("body_entered", self, "_on_body_entered")
 
@@ -19,6 +21,7 @@ func _on_body_entered(body):
 				already_triggered = true
 				play_line(1)
 				yield(audio_player, "finished")
+				emit_signal("instruction_triggered", 1)
 				queue_free()
 			2:
 				already_triggered = true
@@ -35,17 +38,20 @@ func _on_body_entered(body):
 				already_triggered = true
 				play_line(5)
 				yield(audio_player, "finished")
+				emit_signal("instruction_triggered", 2)
 				queue_free()
 			4:
 				already_triggered = true
 				play_line(6)
 				yield(audio_player, "finished")
+				emit_signal("instruction_triggered", 3)
 				queue_free()
 			5:
 				if body.has_level_end_key:
 					already_triggered = true
 					play_line(7)
 					yield(audio_player, "finished")
+					emit_signal("instruction_triggered", 4)
 					queue_free()
 			6:
 				already_triggered = true
