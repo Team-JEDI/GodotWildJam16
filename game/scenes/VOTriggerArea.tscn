@@ -12,5 +12,5 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-volume_db = -16.0
+volume_db = -8.0
 bus = "Voice"
