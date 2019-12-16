@@ -8,7 +8,7 @@ onready var tut_label = $ui/tut_text
 onready var go_popup = $ui/gameover_popup
 onready var pause_popup = $ui/pause_popup
 
-export var level_num : int = 0
+export var level_num : int = 1
 
 var darkness_mat = preload("res://assets/textures/darkness_material.tres")
 
