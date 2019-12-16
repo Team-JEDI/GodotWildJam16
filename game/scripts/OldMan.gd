@@ -5,6 +5,7 @@ const TILE_SIZE := 96.0
 enum states {
 	FOLLOW,
 	IDLE,
+	DONE
 }
 
 var state = states.FOLLOW
@@ -32,9 +33,13 @@ func _ready():
 
 func _physics_process(delta):
 	# Handle movement direction
-	if state == states.FOLLOW:
-		if position.distance_to(player.position) > 96.0:
-			move = player.position - position
+	if state == states.FOLLOW or state == states.IDLE:
+		if position.distance_to(player.position) > 200.0 and state == states.IDLE:
+			state = states.FOLLOW
+		elif position.distance_to(player.position) < 96.0 and state == states.FOLLOW:
+			state = states.IDLE	
+		if state == states.FOLLOW:
+			move = player.position - position	
 		else:
 			move = Vector2.ZERO	
 		_control_sprite_animation()
