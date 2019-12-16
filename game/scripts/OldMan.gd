@@ -7,7 +7,7 @@ enum states {
 	IDLE,
 }
 
-var state = states.IDLE
+var state = states.FOLLOW
 var player
 var sprite_dir : int = 0
 var sprite_angles : Array = [PI/8, 7*PI/8, 9*PI/8, 15*PI/8]
@@ -15,13 +15,13 @@ var sprite_dir_to_str_walking : Dictionary = {
 	0 : "WalkRight",
 	3 : "WalkDown",
 	2 : "WalkLeft",
-	1 : "WalkDown"
+	1 : "WalkUp"
 }
 var sprite_dir_to_str_idle : Dictionary = {
 	0 : "IdleRight",
 	3 : "IdleDown",
 	2 : "IdleLeft",
-	1 : "IdleDown"
+	1 : "IdleUp"
 }
 var move : Vector2
 
@@ -34,10 +34,11 @@ func _physics_process(delta):
 	# Handle movement direction
 	if state == states.FOLLOW:
 		if position.distance_to(player.position) > 96.0:
-			move = position - player.position
+			move = player.position - position
 		else:
 			move = Vector2.ZERO	
 		_control_sprite_animation()
+		move_and_slide(move.normalized() * 240)
 		z_index = round(position.y / TILE_SIZE)	
 
 func _control_sprite_animation():

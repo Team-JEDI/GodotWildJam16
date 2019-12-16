@@ -40,6 +40,9 @@ func _ready():
 	_set_materials_for_lighting()
 	MusicAndAmbience.set_play_ambience(true)
 
+	if get_node("OldMan"):
+		get_node("OldMan").player = $Character
+
 func _process(delta):
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().paused = true

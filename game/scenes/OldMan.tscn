@@ -188,7 +188,7 @@ tracks/0/keys = {
 "values": [ 18, 19, 20, 21, 22, 23, 24, 25 ]
 }
 
-[node name="Character" type="KinematicBody2D"]
+[node name="OldMan" type="KinematicBody2D"]
 collision_layer = 3
 script = ExtResource( 1 )
 
