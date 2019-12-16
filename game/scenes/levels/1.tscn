@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/LevelTemplate.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Gate.tscn" type="PackedScene" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://scenes/EndGate.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/VOTriggerArea.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/OldMan.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/enemy/Lvl1Blockhead.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/enemy/GraphNode.tscn" type="PackedScene" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 30, 30 )
@@ -30,6 +32,16 @@ scale = Vector2( 7, 3 )
 
 [node name="CollisionShape2D" parent="EndZone" index="0"]
 shape = SubResource( 1 )
+
+[node name="Blockhead" parent="EnemyHandler/Enemies" index="0" instance=ExtResource( 7 )]
+
+[node name="Patrol0" type="Node2D" parent="EnemyHandler/EnemyPatrols" index="0"]
+
+[node name="GraphNode" parent="EnemyHandler/EnemyPatrols/Patrol0" index="0" instance=ExtResource( 8 )]
+position = Vector2( 842, 2626 )
+
+[node name="GraphNode2" parent="EnemyHandler/EnemyPatrols/Patrol0" index="1" instance=ExtResource( 8 )]
+position = Vector2( 2305, 2648 )
 
 [node name="Character" parent="." index="5"]
 position = Vector2( 1700, 5755 )
