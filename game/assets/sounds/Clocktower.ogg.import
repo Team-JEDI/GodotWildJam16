@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Clocktower.ogg-a9f5aad05956ccb469e985897d344fcb.oggs
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

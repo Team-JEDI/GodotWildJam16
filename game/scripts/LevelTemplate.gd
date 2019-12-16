@@ -30,7 +30,8 @@ func _ready():
 		for trigger in $VOTriggers.get_children():
 			trigger.connect("instruction_triggered", self, "_on_instruction_text")
 	
-	GameTimer.start_new_game()
+	if level_num == 1:
+		GameTimer.start_new_game()
 	
 	if LoadHelper.is_loading:
 		restore_save_data()

@@ -3,12 +3,11 @@ extends Node
 # This script controls the time-remaining mechanic for the game
 
 const HOURS_IN_GAME : int = 5        # Number of hours left at beginning
-const SECS_IN_HOUR : int = 360       # 6 minutes IRL == 1 hour in-game
+const SECS_IN_HOUR : int = 180       # 3 minutes IRL == 1 hour in-game
 const BELL_ECHO_SIZE : int = 10000
 const BELL_ECHO_POS := Vector2(0, -1000)
 
-# TODO: Replace with actual bell sound
-onready var belltower_sound : AudioStreamSample = preload("res://assets/sounds/temp_interactable_snd.wav")
+onready var belltower_sound := preload("res://assets/sounds/Clocktower.ogg")
 
 var bell_player : AudioStreamPlayer = AudioStreamPlayer.new()
 var global_timer : Timer = Timer.new()
