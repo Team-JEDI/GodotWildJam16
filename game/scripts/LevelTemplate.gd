@@ -4,6 +4,7 @@ const TIME_ALERT_LABEL_TEXT := "%d HOUR%s REMAINING"
 
 onready var Echo = preload("res://scenes/Echo.tscn")
 onready var alert = $ui/time_alert
+onready var tut_label = $ui/tut_text
 onready var go_popup = $ui/gameover_popup
 onready var pause_popup = $ui/pause_popup
 
@@ -24,7 +25,10 @@ func _ready():
 		enemy.connect("enemy_noise_made", self, "_on_noise_made")
 	for interactable in $Interactables.get_children():
 		if "Key" in interactable.name:
-			interactable.connect("key_noise_made", self, "_on_noise_made")	
+			interactable.connect("key_noise_made", self, "_on_noise_made")
+	if has_node("VOTriggers"):
+		for trigger in $VOTriggers.get_children():
+			trigger.connect("instruction_triggered", self, "_on_instruction_text")
 	
 	GameTimer.start_new_game()
 	
@@ -63,6 +67,34 @@ func _on_hour_elapsed(hours_left):
 	
 	# Fade out
 	label_tween.interpolate_property(alert, "modulate:a", 1.0, 0.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	label_tween.start()
+	yield(label_tween, "tween_all_completed")
+	label_tween.queue_free()
+
+func _on_instruction_text(instruction_num):
+	
+	match instruction_num:
+		1:
+			tut_label.text = "Use WASD to move\nPress 'Q' to ring the bell while holding it"
+		2:
+			tut_label.text = "Press 'TAB' to switch between your bell and keys\nPress 'E' to open gates"
+		3:
+			tut_label.text = "Use the bell to find keys"
+		4:
+			tut_label.text = "Press 'Q' to unlock gates while holding keys"
+		
+	# Fade in
+	var label_tween = Tween.new()
+	add_child(label_tween)
+	label_tween.interpolate_property(tut_label, "modulate:a", 0.0, 1.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	label_tween.start()
+	yield(label_tween, "tween_all_completed")
+	
+	# Wait a few seconds
+	yield(get_tree().create_timer(3.0), "timeout")
+	
+	# Fade out
+	label_tween.interpolate_property(tut_label, "modulate:a", 1.0, 0.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	label_tween.start()
 	yield(label_tween, "tween_all_completed")
 	label_tween.queue_free()
