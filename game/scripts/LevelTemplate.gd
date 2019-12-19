@@ -35,6 +35,7 @@ func _ready():
 	
 	if LoadHelper.is_loading:
 		restore_save_data()
+		LoadHelper.is_loading = false
 	else:
 		_on_game_saved()
 	
@@ -48,6 +49,10 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().paused = true
 		pause_popup.popup_centered()
+	
+	# Adding super secret debug action
+	if Input.is_key_pressed(KEY_PAGEUP) and Input.is_key_pressed(KEY_0):
+		_on_level_finished($Character)
 
 func _on_noise_made(echo_scale, location):
 	var new_echo = Echo.instance()
