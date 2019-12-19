@@ -9,7 +9,7 @@ var music_streams : Array = [
 	load("res://assets/sounds/Amor_Fati.ogg"),
 	load("res://assets/sounds/Fracti_Silentium.ogg"),
 	load("res://assets/sounds/Timor_Mortis.ogg"),
-	load("res://assets/sounds/Prima_luce.ogg")
+	load("res://assets/sounds/Prima_Luce.ogg")
 ]
 var stings : Array = [
 	load("res://assets/sounds/Sting1.ogg"),
