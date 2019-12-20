@@ -1,12 +1,12 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/MainMenu.gd" type="Script" id=1]
-[ext_resource path="res://assets/sounds/Amor_Fati.ogg" type="AudioStream" id=2]
-[ext_resource path="res://assets/videos/title.ogv" type="VideoStream" id=3]
-[ext_resource path="res://assets/textures/logo.png" type="Texture" id=4]
-[ext_resource path="res://assets/fonts/menu.tres" type="DynamicFont" id=5]
-[ext_resource path="res://assets/sounds/Ambience.ogg" type="AudioStream" id=6]
-[ext_resource path="res://assets/textures/credits.png" type="Texture" id=7]
+[ext_resource path="res://assets/videos/title.ogv" type="VideoStream" id=2]
+[ext_resource path="res://assets/textures/credits.png" type="Texture" id=3]
+[ext_resource path="res://assets/fonts/menu.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/textures/logo.png" type="Texture" id=5]
+[ext_resource path="res://assets/sounds/Amor_Fati.ogg" type="AudioStream" id=6]
+[ext_resource path="res://assets/sounds/Ambience.ogg" type="AudioStream" id=7]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
@@ -22,7 +22,7 @@ __meta__ = {
 [node name="VideoPlayer" type="VideoPlayer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-stream = ExtResource( 3 )
+stream = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -35,7 +35,7 @@ margin_bottom = 40.0
 [node name="TextureRect_Credits" type="TextureRect" parent="Credits"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-texture = ExtResource( 7 )
+texture = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -45,7 +45,7 @@ margin_left = 760.0
 margin_top = 1019.0
 margin_right = 1160.0
 margin_bottom = 1053.0
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 4 )
 custom_colors/font_color_hover = Color( 0.588235, 0.72549, 0.811765, 1 )
 text = "BACK"
 flat = true
@@ -70,7 +70,7 @@ margin_left = 140.0
 margin_top = 310.0
 margin_right = 1740.0
 margin_bottom = 730.0
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 expand = true
 stretch_mode = 5
 __meta__ = {
@@ -96,7 +96,7 @@ __meta__ = {
 margin_top = 123.0
 margin_right = 400.0
 margin_bottom = 157.0
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 4 )
 custom_colors/font_color_hover = Color( 0.588235, 0.72549, 0.811765, 1 )
 text = "NEW GAME"
 flat = true
@@ -105,7 +105,7 @@ flat = true
 margin_top = 175.0
 margin_right = 400.0
 margin_bottom = 209.0
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 4 )
 custom_colors/font_color_hover = Color( 0.588235, 0.72549, 0.811765, 1 )
 text = "LOAD GAME"
 flat = true
@@ -114,7 +114,7 @@ flat = true
 margin_top = 227.0
 margin_right = 400.0
 margin_bottom = 261.0
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 4 )
 custom_colors/font_color_hover = Color( 0.588235, 0.72549, 0.811765, 1 )
 text = "CREDITS"
 flat = true
@@ -123,18 +123,18 @@ flat = true
 margin_top = 279.0
 margin_right = 400.0
 margin_bottom = 313.0
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 4 )
 custom_colors/font_color_hover = Color( 0.588235, 0.72549, 0.811765, 1 )
 text = "QUIT"
 flat = true
 
 [node name="AudioStreamPlayer_Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 2 )
+stream = ExtResource( 6 )
 volume_db = -10.0
 bus = "Music0"
 
 [node name="AudioStreamPlayer_Ambience" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 6 )
+stream = ExtResource( 7 )
 volume_db = -10.0
 bus = "Ambience"
 
