@@ -57,31 +57,6 @@ func _make_nodes(floor_cells, wall_cells, wall_tilemap):
 		pos_to_node[node.position] = node
 		$Nodes.add_child(node)
 		node.hide()
-
-func _get_local_node_map(cell, cell_exists_at) -> Array:
-	var local_node_map := [
-		[true]
-	]
-	var neighbor_cell_exists : bool
-	"""
-	##############
-	# problem code... probably unnecessary anyway.
-	##############
-	for i in range(-1, 2):
-		for j in range(-1, 2):
-			if not (i == 0 and j == 0):
-				neighbor_cell_exists = cell_exists_at.has(cell + Vector2(i, j))
-				if not neighbor_cell_exists:
-					if j == 0:
-						for k in range(3):
-							local_node_map[i + 1][k] = false
-					elif i == 0:
-						for k in range(3):
-							local_node_map[k][j + 1] = false 		
-					elif abs(i) == 1 and abs(j) == 1:
-						local_node_map[i + 1][j + 1] = false
-	"""
-	return local_node_map					
 				
 func _connect_nodes():
 	var edges_pos : int

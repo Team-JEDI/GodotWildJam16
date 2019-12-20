@@ -4,7 +4,7 @@ signal enemy_noise_made
 
 const WALK_SPEED : float = 80.0
 const RUN_SPEED : float = 270.0
-const GRAB_DIST : float = 60.0
+const GRAB_DIST : float = 96.0
 const LIGHT_FADE_SZ : float = 1000.0
 const CHASE_TIMEOUT_DIST : float = 300.0
 const CHASE_TIMEOUT_TIME : float = 8.0

@@ -95,7 +95,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 resource_name = "Feast"
 length = 0.6
 loop = true
@@ -112,7 +112,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 19, 20 )
 
 [node name="Blockhead" type="KinematicBody2D"]
@@ -131,13 +131,13 @@ anims/FaceDown = SubResource( 1 )
 anims/FaceLeft = SubResource( 2 )
 anims/FaceRight = SubResource( 3 )
 anims/FaceUp = SubResource( 4 )
-anims/Feast = SubResource( 6 )
+anims/Feast = SubResource( 5 )
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -9 )
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="Feast" type="Sprite" parent="."]
 visible = false
